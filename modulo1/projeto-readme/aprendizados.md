@@ -1,0 +1,2 @@
+*Aprendizados da semana*
+Durante essa semana, aprendi a usar o sistema Ubuntu, baixando programas e customizando, aprendi e consegui fixar boa parte dos comandos do terminal e conheci e treinei **bastante** Git. 
