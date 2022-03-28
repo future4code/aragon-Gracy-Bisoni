@@ -102,7 +102,7 @@ return array.pop()
 function trocaPrimeiroEUltimo(array) {
   // implemente sua lógica aqui
 let ultimoElemento = array.pop()
-let primeiroElemento = array[0]
+let primeiroElemento = array.splice(0,1)
 array.push(primeiroElemento)
 array[0] = ultimoElemento
 return array
@@ -120,17 +120,49 @@ return comparacao
 // EXERCÍCIO 13
 function checaRenovacaoRG() {
   // implemente sua lógica aqui
+const anoAtual = Number(prompt(`Qual é seu ano atual?`))
+const anoNascimento = Number(prompt(`Agora, em que ano você nasceu?`))
+const emissaoRG = Number(prompt(`E em qual ano foi emitido seu RG?`))
 
+const idade = anoAtual - anoNascimento
+const tempoRG = anoAtual - emissaoRG
+
+const comparacao1 = idade <= 20 && tempoRG >= 5
+const comparacao2 = idade > 20 && idade <=50 && tempoRG >=10
+const comparacao3 = idade > 50 && tempoRG >= 15
+let renovar = comparacao1 || comparacao2 || comparacao3
+console.log(renovar)
+return renovar
 }
 
 // EXERCÍCIO 14
 function checaAnoBissexto(ano) {
   // implemente sua lógica aqui
+const divide400 = ano % 400
+let multiplo400 = divide400 === 0
 
+const divide4 = ano % 4
+let multiplo4 = divide4 === 0
+let divide100 = ano%100 
+let diferente = divide100 !== 0
+let condicao2 = multiplo4 && diferente
+
+let bissexto = multiplo400 || condicao2
+console.log(bissexto)
+return bissexto
 }
 
 // EXERCÍCIO 15
 function checaValidadeInscricaoLabenu() {
   // implemente sua lógica aqui
+const maiorDeIdade = prompt(`Você tem mais de 18 anos?`)
+maiorDeIdade.toLowerCase()
+const ensinoMedio = prompt(`Você possui ensino médio completo?`)
+ensinoMedio.toLowerCase()
+const disponibilidade =  prompt (`Você possui disponibilidade exclusiva durante os horários do curso?`)
+disponibilidade.toLowerCase()
 
+let taOK = maiorDeIdade === ensinoMedio === disponibilidade
+console.log(taOK)
+return taOK
 }
