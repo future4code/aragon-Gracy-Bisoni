@@ -153,16 +153,5 @@ return bissexto
 }
 
 // EXERCÍCIO 15
-function checaValidadeInscricaoLabenu() {
-  // implemente sua lógica aqui
-const maiorDeIdade = prompt(`Você tem mais de 18 anos?`)
-maiorDeIdade.toLowerCase()
-const ensinoMedio = prompt(`Você possui ensino médio completo?`)
-ensinoMedio.toLowerCase()
-const disponibilidade =  prompt (`Você possui disponibilidade exclusiva durante os horários do curso?`)
-disponibilidade.toLowerCase()
 
-let taOK = maiorDeIdade === ensinoMedio === disponibilidade
-console.log(taOK)
-return taOK
 }
