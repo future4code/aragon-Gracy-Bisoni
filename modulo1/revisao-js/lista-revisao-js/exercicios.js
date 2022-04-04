@@ -4,24 +4,24 @@
 
 
 // EXERCÍCIO 01
-// function retornaTamanhoArray(array) {
-//    return array.length
-// }
-// retornaTamanhoArray()
+function retornaTamanhoArray(array) {
+   return array.length
+}
+retornaTamanhoArray()
 
-// // EXERCÍCIO 02
-// function retornaArrayInvertido(array) {
-// return array.reverse()
-// }
-// retornaArrayInvertido()
+// EXERCÍCIO 02
+function retornaArrayInvertido(array) {
+return array.reverse()
+}
+retornaArrayInvertido()
 
 
-// // EXERCÍCIO 03
-// function retornaArrayOrdenado(array) {
-//   let arrayOrdenado = array.sort((a,b) => a-b)
-//   return arrayOrdenado
-// }
-// retornaArrayOrdenado()
+// EXERCÍCIO 03
+function retornaArrayOrdenado(array) {
+  let arrayOrdenado = array.sort((a,b) => a-b)
+  return arrayOrdenado
+}
+retornaArrayOrdenado()
 
 // EXERCÍCIO 04
 function retornaNumerosPares(array) {
@@ -35,8 +35,13 @@ retornaNumerosPares()
 
 // EXERCÍCIO 05
 function retornaNumerosParesElevadosADois(array) {
- 
+    if (numero%2 === 0){
+        const paresAoQuadrado = array.map((numero) => {
+      return numero*numero
+  })
 }
+}
+retornaNumerosParesElevadosADois()                                   mfvc  )
 
 // EXERCÍCIO 06
 function retornaMaiorNumero(array) {
