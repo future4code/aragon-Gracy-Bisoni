@@ -4,20 +4,22 @@
 
 
 // EXERCÍCIO 01
-function retornaTamanhoArray(array) {
-   return array.length
-}
-retornaTamanhoArray()
+// function retornaTamanhoArray(array) {
+//    return array.length
+// }
+// retornaTamanhoArray()
 
-// EXERCÍCIO 02
-function retornaArrayInvertido(array) {
-return array.reverse()
-}
-retornaArrayInvertido()
+// // EXERCÍCIO 02
+// function retornaArrayInvertido(array) {
+// return array.reverse()
+// }
+// retornaArrayInvertido()
 
 
 // EXERCÍCIO 03
 function retornaArrayOrdenado(array) {
+  let arrayOrdenado = array.sort((a,b) => a-b)
+  return arrayOrdenado
 }
 retornaArrayOrdenado()
 
