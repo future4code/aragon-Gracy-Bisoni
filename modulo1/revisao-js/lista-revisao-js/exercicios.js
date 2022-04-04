@@ -16,17 +16,22 @@
 // retornaArrayInvertido()
 
 
-// EXERCÍCIO 03
-function retornaArrayOrdenado(array) {
-  let arrayOrdenado = array.sort((a,b) => a-b)
-  return arrayOrdenado
-}
-retornaArrayOrdenado()
+// // EXERCÍCIO 03
+// function retornaArrayOrdenado(array) {
+//   let arrayOrdenado = array.sort((a,b) => a-b)
+//   return arrayOrdenado
+// }
+// retornaArrayOrdenado()
 
 // EXERCÍCIO 04
 function retornaNumerosPares(array) {
-  
+const novaArray = array.filter((numero) => {
+    return numero%2 === 0
+})
+return novaArray
 }
+retornaNumerosPares()
+
 
 // EXERCÍCIO 05
 function retornaNumerosParesElevadosADois(array) {
