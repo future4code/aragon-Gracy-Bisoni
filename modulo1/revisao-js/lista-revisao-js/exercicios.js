@@ -35,23 +35,48 @@ retornaNumerosPares()
 
 // EXERCÍCIO 05
 function retornaNumerosParesElevadosADois(array) {
-    if (numero%2 === 0){
-        const paresAoQuadrado = array.map((numero) => {
-      return numero*numero
-  })
+const numerosPares = array.filter((numero) => {
+        return numero % 2 === 0
+    })
+const numerosParesElevadosAoQuadrado = numerosPares.map((numero) => {
+        return numero * numero
+    })
+    return numerosParesElevadosAoQuadrado
 }
-}
-retornaNumerosParesElevadosADois()                                   mfvc  )
+retornaNumerosParesElevadosADois()
 
 // EXERCÍCIO 06
 function retornaMaiorNumero(array) {
-  
+  let maiorNumero = -Infinity
+  for (let i=0; i< array.length; i++){
+      let posicaoAtualArray = array[i]
+      if (posicaoAtualArray >= maiorNumero){
+          maiorNumero = posicaoAtualArray
+      }
+  } return maiorNumero
 }
+retornaMaiorNumero()
 
 // EXERCÍCIO 07
+let maiorNumero = -Infinity
+let menorNumero = Infinity
 function retornaObjetoEntreDoisNumeros(num1, num2) {
-
+    let maiorNumero = -Infinity
+    let menorNumero = Infinity
+    if (num1 >= num2){
+    maiorNumero =+ num1
+    menorNumero =+ num2
+    } else if (num2 >= num1){
+        maiorNumero =+ num2
+        menorNumero =+ num1 
+    } 
+    const objeto = 
+    {maiorNumero: maiorNumero,
+     maiorDivisivelPorMenor: maiorNumero%menorNumero === 0,
+     diferenca: maiorNumero-menorNumero}
+    return objeto
 }
+retornaObjetoEntreDoisNumeros()
 
 // EXERCÍCIO 08
 function retornaNPrimeirosPares(n) {
