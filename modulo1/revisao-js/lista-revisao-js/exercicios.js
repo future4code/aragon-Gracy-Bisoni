@@ -7,13 +7,11 @@
 function retornaTamanhoArray(array) {
    return array.length
 }
-retornaTamanhoArray()
 
 // EXERCÍCIO 02
 function retornaArrayInvertido(array) {
 return array.reverse()
 }
-retornaArrayInvertido()
 
 
 // EXERCÍCIO 03
@@ -21,7 +19,6 @@ function retornaArrayOrdenado(array) {
   let arrayOrdenado = array.sort((a,b) => a-b)
   return arrayOrdenado
 }
-retornaArrayOrdenado()
 
 // EXERCÍCIO 04
 function retornaNumerosPares(array) {
@@ -30,7 +27,6 @@ const novaArray = array.filter((numero) => {
 })
 return novaArray
 }
-retornaNumerosPares()
 
 
 // EXERCÍCIO 05
@@ -43,7 +39,6 @@ const numerosParesElevadosAoQuadrado = numerosPares.map((numero) => {
     })
     return numerosParesElevadosAoQuadrado
 }
-retornaNumerosParesElevadosADois()
 
 // EXERCÍCIO 06
 function retornaMaiorNumero(array) {
@@ -55,7 +50,6 @@ function retornaMaiorNumero(array) {
       }
   } return maiorNumero
 }
-retornaMaiorNumero()
 
 // EXERCÍCIO 07
 let maiorNumero = -Infinity
@@ -76,7 +70,7 @@ function retornaObjetoEntreDoisNumeros(num1, num2) {
      diferenca: maiorNumero-menorNumero}
     return objeto
 }
-retornaObjetoEntreDoisNumeros()
+
 
 // EXERCÍCIO 08
 function retornaNPrimeirosPares(n) {
@@ -86,7 +80,6 @@ function retornaNPrimeirosPares(n) {
    }
  return arrayPares
 }
-retornaNPrimeirosPares()
 
 // EXERCÍCIO 09
 function classificaTriangulo(ladoA, ladoB, ladoC) {
@@ -98,7 +91,6 @@ if (ladoA === ladoB && ladoB === ladoC && ladoA === ladoC){
     return "Isósceles"
 }
 }
-classificaTriangulo()
 
 // EXERCÍCIO 10
 function retornaSegundoMaiorESegundoMenor(array) {
@@ -109,11 +101,12 @@ function retornaSegundoMaiorESegundoMenor(array) {
   const novoArray = [segundoMaior,segundoMenor]
   return novoArray
 }
-retornaSegundoMaiorESegundoMenor()
+
 
 // EXERCÍCIO 11
 function retornaChamadaDeFilme(filme) {
-   
+let frase = `Venha assistir ao filme ${filme.nome}, de ${filme.ano}, dirigido por ${filme.diretor} e estrelado por ${filme.atores.join(", ")}.`
+return frase
 }
 
 // EXERCÍCIO 12
