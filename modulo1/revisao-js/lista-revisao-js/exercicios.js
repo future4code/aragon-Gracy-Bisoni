@@ -102,8 +102,14 @@ classificaTriangulo()
 
 // EXERCÍCIO 10
 function retornaSegundoMaiorESegundoMenor(array) {
+  let arrayOrdenado = array.sort((a,b) => a-b)
   
+  let segundoMaior = arrayOrdenado[(arrayOrdenado.length-2)]
+  let segundoMenor = arrayOrdenado[1]
+  const novoArray = [segundoMaior,segundoMenor]
+  return novoArray
 }
+retornaSegundoMaiorESegundoMenor()
 
 // EXERCÍCIO 11
 function retornaChamadaDeFilme(filme) {
