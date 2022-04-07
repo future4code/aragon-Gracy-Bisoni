@@ -147,3 +147,11 @@ td button {
 #back-button:hover {
     background-color: #635a3d
 }
+
+.botao-comprar:hover{
+    background-color: #e3c43d;
+}
+
+.botao-comprar:active{
+    color: white;
+}
