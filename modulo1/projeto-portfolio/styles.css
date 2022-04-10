@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+
+/* * {
+    background-color: #F5EFFF;
+} */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    color: #2d2941;
+    overflow-x: hidden;
+}
+
+/* Header */
+.header-container {
+    height: 100vh;
+    width: 100vw;
+    background-color: #F5EFFF;
+}
+
+/* Título */
+h1{
+    font-size: 50px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    position: relative;
+    left: 10%;
+    top: 20%;
+}
+
+h2{
+    text-transform: uppercase;
+    letter-spacing: 4px; 
+    position: relative;
+    left: 10%;
+    top: 25%;
+    color: #A96DA3;
+}
+
+.redes-sociais{
+    margin-top: 1rem;
+    display: flex;text-transform: uppercase;
+    letter-spacing: 4px;
+    position: relative;
+    left: 10%;
+    top: 30%;
+}
+
+.redes-sociais a{
+    text-decoration: none;
+    color: #2d2941;
+    border: 1px solid #2d2941;
+    padding: 25px;
+    padding-bottom:0%;
+    width: 200px;
+    height: 50px;
+    text-transform: uppercase;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    transition: .5s ease-in-out;
+    background-color: #CDC1FF;
+    font-weight: bolder;
+}
+
+a:hover{
+    background-color: #A96DA3;
+    color: #F5EFFF;
+}
+
+.foto-isa{
+    position: absolute;
+    top: 20%;
+    right:10%;
+    width: 450px;
+}
+
+/* Menu Hambúrguer - traços */
+
+.checkbox-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.checkbox{
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9999;
+    transition: 400ms ease-in-out 0s;
+}
+.trace{
+    width: 50px;
+    height: 5px;
+    position: absolute;
+    border-radius: 4px;
+    transition: 0.5s ease-in-out;
+    z-index:1;
+    background-color: #A96DA3;
+}
+.trace:nth-child(1){
+    top: 26px;
+    transform: rotate(0);
+}
+.trace:nth-child(2){
+    top: 46px;
+    transform: rotate(0);
+}
+
+.trace:nth-child(3){
+    top: 66px;
+    transform: rotate(0);
+}
+#toggle{
+    display: none;
+}
+
+/* Menu */
+.menu{
+    position: absolute;
+    top: 28px;
+    right: 30px;
+    background-color: transparent;
+    height: 4px;
+    width: 40px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 0px 0px #F5EFFF;
+    z-index: -1;
+    transition: 400ms ease-in-out 0s;
+}
+
+.menu-itens{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    transition: 400ms ease-in-out 0s;
+}
+
+.menu-itens ul{
+    list-style-type: none;
+    color: #2d2941;
+}
+
+.menu-itens ul li a {
+    margin: 10px 0;
+    color:#2d2941;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 40px;
+}
+
+/* Animação */
+#toggle:checked + .checkbox .trace:nth-child(1){
+    transform: rotate(45deg);
+    top: 47px;
+}
+
+#toggle:checked + .checkbox .trace:nth-child(2){
+    transform:translate(-100px);
+    width: 30px;
+    visibility: hidden;
+    opacity: 0;
+}
+#toggle:checked + .checkbox .trace:nth-child(3){
+    transform: rotate(-45deg);
+    top: 47px;
+}
+#toggle:checked + .checkbox{
+    background-color: #ffffff;
+}
+#toggle:checked ~ .menu{
+    box-shadow: 0px 0px 0px 100vmax #ffffff;
+    z-index: 1;
+}
+#toggle:checked ~ .menu-itens{
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Rodapé */
+.footer div{
+    background-color: #CDC1FF;
+    color: #2d2941;
+    font-size: medium;
+    font-weight: bold;
+    display: block;
+    padding: 100px;
+    text-align: center;
+}
+.icone{
+    position: relative;
+    left: 0;
+    display: inline-block;
+    width: 30px;
+}
+.texto-rodape{
+    display: inline-block;
+    margin-left: 2px;
+}
+
+/* Content */
+.sobre-mim{
+    position: relative;
+    margin: 0 10% 5% 10%;
+    background-color:#ffffff;
+}
+.titulo-home{
+    font-weight: bolder;
+    font-size: x-large;
+}
+
