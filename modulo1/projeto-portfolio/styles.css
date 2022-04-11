@@ -315,8 +315,10 @@ a:hover{
    font-size: 14px; 
 }
 
+/* PÁGINA CONTATO */
+
 form {
-    margin: 0 auto;
+    margin: 50px auto;
     width: 400px;
     padding: 5em;
     border: 10px solid #A96DA3;
@@ -360,4 +362,35 @@ button{
     padding: 10px;
     cursor: pointer;
     border-radius: 1em;
+}
+
+.header-form{
+    background-color: #F5EFFF;
+    padding-bottom: 10px;
+}
+
+.header-skills{
+    background-color: #F5EFFF;
+    padding-bottom: 10px;
+}
+
+/* PÁGINA HABILIDADES */
+table{
+    text-align: center;
+    border: 10px solid #A96DA3;
+    border-radius: 1em;
+    padding: 0 20px;
+    margin: 20px auto;
+    width: fit-content;
+}
+table h2{
+    letter-spacing: 1px;
+    text-align:justify;
+    padding: 0 50px;
+}
+table p{
+    font-weight:bolder;
+}
+.dados{
+    padding: 0 20px;
 }
