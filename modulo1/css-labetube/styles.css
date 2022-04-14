@@ -1,42 +1,61 @@
 body{
     text-decoration: none;
     font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-x:hidden;
 }
 header{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: green;
+    background-color: rgb(220, 90, 10);
     height: 20%;
-    padding: 0 30px;
+    padding: 0 2rem;
+    width: 100vw;
+    margin: 0 2rem;
 }
+header a {
+    text-decoration: none;
+    color: black;
+    margin-left: 2rem;
+}
+header input{
+    margin-right: 2rem;
+}
+
 footer{
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: green;
+    background-color: rgb(220, 90, 10);
     height: 20%;
-    padding: 0 30px;
+    width: 100vw;
+    padding: 0 2rem;
+
 }
+
 /* CARDS */
-main{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    row-gap: 20px;
-    column-gap: 10px;
-    margin: 20px;
+.cards-home{
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0 2em;
+    justify-content: center;
+    align-items: center;
 }
-main div{
-    border: 3px solid green;
+.cards-home div{
+    border: 3px solid rgb(220, 90, 10);
 }
-main div h2{
+.cards-home div h2{
     text-decoration: none;
-    color: green;
+    color: rgb(220, 90, 10);
     text-align: center;
     font-family: sans-serif;
     text-transform: uppercase;
 }
-main div a{
+.cards-home div a{
     text-decoration: none;
 }
 .card-container{
@@ -44,13 +63,26 @@ main div a{
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 2px 2px 5px darkgray;
     text-align: center;
+    margin: 0.5em;
 }
 .card-image{
-    width: 100%;
+    width: 20em;
 }
+
+/* PÁGINA VÍDEO */
+
 .video{
-    width: 100%;
+    width: 80vw;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 0.5rem solid rgb(220, 90, 10);
+}
+.container h2{
+    color: rgb(220, 90, 10);
 }
 
