@@ -1,0 +1,396 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+
+/* * {
+    background-color: #F5EFFF;
+} */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    color: #2d2941;
+    overflow-x: hidden;
+}
+
+/* Header */
+.header-container {
+    height: 100vh;
+    width: 100vw;
+    background-color: #F5EFFF;
+}
+
+/* Título */
+h1{
+    font-size: 50px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    position: relative;
+    left: 10%;
+    top: 20%;
+}
+
+h2{
+    text-transform: uppercase;
+    letter-spacing: 4px; 
+    position: relative;
+    left: 10%;
+    top: 25%;
+    color: #A96DA3;
+}
+
+.redes-sociais{
+    margin-top: 1rem;
+    display: flex;text-transform: uppercase;
+    letter-spacing: 4px;
+    position: relative;
+    left: 10%;
+    top: 30%;
+}
+
+.redes-sociais a{
+    text-decoration: none;
+    color: #2d2941;
+    border: 1px solid #2d2941;
+    padding: 25px;
+    padding-bottom:0%;
+    width: 200px;
+    height: 50px;
+    text-transform: uppercase;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    transition: .5s ease-in-out;
+    background-color: #CDC1FF;
+    font-weight: bolder;
+}
+
+a:hover{
+    background-color: #A96DA3;
+    color: #F5EFFF;
+}
+
+.foto-isa{
+    position: absolute;
+    top: 20%;
+    right:10%;
+    width: 450px;
+}
+
+/* Menu Hambúrguer - traços */
+
+.checkbox-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.checkbox{
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9999;
+    transition: 400ms ease-in-out 0s;
+}
+.trace{
+    width: 50px;
+    height: 5px;
+    position: absolute;
+    border-radius: 4px;
+    transition: 0.5s ease-in-out;
+    z-index:1;
+    background-color: #A96DA3;
+}
+.trace:nth-child(1){
+    top: 26px;
+    transform: rotate(0);
+}
+.trace:nth-child(2){
+    top: 46px;
+    transform: rotate(0);
+}
+
+.trace:nth-child(3){
+    top: 66px;
+    transform: rotate(0);
+}
+#toggle{
+    display: none;
+}
+
+/* Menu */
+.menu{
+    position: absolute;
+    top: 28px;
+    right: 30px;
+    background-color: transparent;
+    height: 4px;
+    width: 40px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 0px 0px #F5EFFF;
+    z-index: -1;
+    transition: 400ms ease-in-out 0s;
+}
+
+.menu-itens{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    transition: 400ms ease-in-out 0s;
+}
+
+.menu-itens ul{
+    list-style-type: none;
+    color: #2d2941;
+}
+
+.menu-itens ul li a {
+    margin: 10px 0;
+    color:#2d2941;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 40px;
+}
+
+/* Animação */
+#toggle:checked + .checkbox .trace:nth-child(1){
+    transform: rotate(45deg);
+    top: 47px;
+}
+
+#toggle:checked + .checkbox .trace:nth-child(2){
+    transform:translate(-100px);
+    width: 30px;
+    visibility: hidden;
+    opacity: 0;
+}
+#toggle:checked + .checkbox .trace:nth-child(3){
+    transform: rotate(-45deg);
+    top: 47px;
+}
+#toggle:checked + .checkbox{
+    background-color: #ffffff;
+}
+#toggle:checked ~ .menu{
+    box-shadow: 0px 0px 0px 100vmax #ffffff;
+    z-index: 1;
+}
+#toggle:checked ~ .menu-itens{
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Rodapé */
+.footer div{
+    background-color: #CDC1FF;
+    color: #2d2941;
+    font-size: medium;
+    font-weight: bold;
+    display: block;
+    padding: 100px;
+    text-align: center;
+}
+.icone{
+    position: relative;
+    left: 0;
+    display: inline-block;
+    width: 30px;
+}
+.texto-rodape{
+    display: inline-block;
+    margin-left: 2px;
+}
+
+/* Content */
+.sobre-mim{
+    position: relative;
+    margin: 0 10% 30px 10%;
+    background-color:#ffffff;
+}
+.titulo-home{
+    font-weight: bolder;
+    font-size: 30px;
+}
+
+/* Projetos */
+.container{
+    height: auto;
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 0;
+}
+
+.card-container{
+    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
+    /* width:90%; */
+    background-color: #F5EFFF;
+}
+.card{
+    width: 300px;
+    height: 300px;
+    border-radius: 100%;
+    margin: 3rem 0 3rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #CDC1FF;
+    /* background-image: url('https://scontent.fbfh12-1.fna.fbcdn.net/v/t1.6435-9/68307931_113537333321823_8655811788228526080_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=ViE43r4WkvsAX_BvInk&_nc_ht=scontent.fbfh12-1.fna&oh=00_AT-e5Uh9OQ6ZbpzXABOJLMH4deAASegUbgf1dyo-F0Oe2w&oe=627607B4'); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* filter: grayscale(0.5); */
+    color: #2d2941;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+}
+.card-text{
+    width: 20%;
+    letter-spacing: 1px;
+    color: #2d2941;
+    font-weight: bold;
+}
+
+.card-wrapper{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+.card-wrapper::before{
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: block;
+    opacity: 0;
+    transition: 0.5s ease-icolumnn-out;
+}
+.card-wrapper h2{
+    font-size: 30px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin: 0;
+    transition: 0.5s ease-in-out;
+    color:#2d2941;
+}
+
+.card-wrapper p{
+    font-size: 0;
+    visibility: visible;
+    opacity: 0;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.5s ease-in-out;
+}
+.card:hover{
+    filter: unset;
+}
+.card:hover > .card-wrapper::before{
+    height:200px;
+    width: 200px;
+    opacity: 1;
+}
+
+.card:hover > .card-wrapper p{
+    opacity: 1;
+   visibility: visible;
+   font-size: 14px; 
+}
+
+/* PÁGINA CONTATO */
+
+form {
+    margin: 50px auto;
+    width: 400px;
+    padding: 5em;
+    border: 10px solid #A96DA3;
+    border-radius: 1em;
+}
+form div + div {
+    margin-top: 1em;
+}
+label {
+    /*Para ter certeza que todas as labels tem o mesmo tamanho e estão propriamente alinhadas */
+    display: inline-block;
+    width: 90px;
+    text-align: right;
+    text-transform: uppercase;
+    padding: 0 20px 0 0;
+    font-weight: bold;
+    color: #2d2941;
+}
+input textarea{
+    width: 300px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+textarea {
+    vertical-align: top;
+    height: 10em;
+}
+
+.button{
+    padding-left: 90px;
+}
+button{
+    color: #2d2941;
+    background-color: #CDC1FF;
+    font-size: large;
+    font-family: sans-serif;
+    font-weight: lighter;
+    text-align: center;
+    position:relative;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 1em;
+}
+
+.header-form{
+    background-color: #F5EFFF;
+    padding-bottom: 10px;
+}
+
+.header-skills{
+    background-color: #F5EFFF;
+    padding-bottom: 10px;
+}
+
+/* PÁGINA HABILIDADES */
+table{
+    text-align: center;
+    border: 10px solid #A96DA3;
+    border-radius: 1em;
+    padding: 0 20px;
+    margin: 20px auto;
+    width: fit-content;
+}
+table h2{
+    letter-spacing: 1px;
+    text-align:justify;
+    padding: 0 50px;
+}
+table p{
+    font-weight:bolder;
+}
+.dados{
+    padding: 0 20px;
+}
