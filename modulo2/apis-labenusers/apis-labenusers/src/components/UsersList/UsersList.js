@@ -1,16 +1,29 @@
 import React from "react";
 import axios from "axios";
+import styled from "styled-components";
 
 const axiosAuth = {
     headers: {
-        Authorization: "isabelle-bisoni-aragon"
+        Authorization: "belle-aragon"
     }
 };
 
+const MainContainer = styled.div`
+    
+`
+
+const UserCard = styled.div`
+    border: 1px black solid;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+`
+
 class UsersList extends React.Component{
     state = {
-        usersList: [],
-        page: "usersList",
+        users: [],
         userID: "",
         userName: "",
     }
@@ -19,15 +32,19 @@ class UsersList extends React.Component{
         this.getAllUsers()
     }
 
-    getAllUsers = async () => {
+    getAllUsers = () => {
         axios
           .get(
             "https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users",
             axiosAuth
           )
-          .then(response => {
-            this.setState({ usersList: response.data });
-          });
+          .then((res) => {
+            this.setState({users:res.data})
+            console.log(res)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
         };
 
     deleteUser = (userID) => {
@@ -36,37 +53,37 @@ class UsersList extends React.Component{
                 `https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users/${userID}`,
                 axiosAuth
             )
-            .then(() => {
+            .then((res) => {
                 alert ('O usuário foi deletado!')
                 this.getAllUsers()
             })
-            .catch((error) => {
-                console.log(error)
-                alert('Erro ao apagar usuário, tente novamente.')
+            .catch((err) => {
+                console.log(err.res.data)
+                alert('Erro')
             })
         }
     
     render(){
-        const users = this.state.usersList
+        const users = this.state.users.map((user) =>{
+            return <UserCard key={user.id}>
+                {user.name}
+                <button
+                onClick={() => this.deleteUser(user.id)}
+                >Deletar</button>
+            </UserCard>
+        })
         return(
-            <div>
-                <ul>
-                    {users.length === 0 
-                    && <div>Carregando...</div> }
-                    {users.map((user) => {
-                        return (
-                            <li
-                            key={user.id}>
-                                {user.name}
-                                <button
-                                onClick={() => this.deleteUser(user.id)}
-                                >Deletar</button>
-                            </li>
-                        )
-                    })}
-                </ul>
-
-            </div>
+            <MainContainer>
+                <button
+                onClick={this.props.goToRegisterPage}
+                >
+                    Ir para cadastro
+                </button>
+                <h2>Lista de usuários</h2>
+                {users}
+                {users.length === 0 
+                && <div>Carregando...</div> }
+              </MainContainer>
         )
 
     }

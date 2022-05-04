@@ -7,75 +7,41 @@ import UsersList from "./components/UsersList/UsersList"
 
 class App extends React.Component {
   state = {
-    page: "register",
-    inputName: "",
-    inputEmail: "",
+    currentPage: "register",
   };
 
-  onChangeInputName = (event) => {
-    this.setState({inputName : event.target.value});
-  };
 
-  onChangeInputEmail = (event) => {
-    this.setState({inputEmail : event.target.value});
-  };
+  // changePage = () => {
+  //   if (this.state.currentPage === "register") {
+  //     this.setState({currentPage: "users"})
+  //   } else {
+  //     this.setState({currentPage: "register"})
+  //   }
+  // };
 
-  createUser = () => {
-      const body= {
-       name: this.state.inputName,
-       email: this.state.inputEmail 
-      };
+  goToUsersList = () => {
+    this.setState({currentPage:"users"})
+  }
 
-    axios
-    .post(
-      `https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users`,
-      body,
-      {
-        headers: {
-          Authorization: "belle-aragon"
-        }
-      }
-    )
-    .then(() => {
-      alert('Usuário cadastrado com sucesso!')
-      this.setState({inputName:"", inputEmail:""});
-    }).catch((error) =>{
-      alert ('Tente novamente!')
-      console.log(error)
-    });
+  goToRegisterPage = () => {
+    this.setState({currentPage: "register"})
   }
 
   changePage = () => {
-    if (this.state.page === "register") {
-      this.setState({page: "users"})
-    } else {
-      this.setState({page: "register"})
+    switch(this.state.currentPage){
+      case "register":
+        return <RegisterPage goToUsersList = {this.goToUsersList}/>
+      case "users":
+      return <UsersList goToRegisterPage= {this.goToRegisterPage}/>
+      default:
+        return "Erro"
     }
-  };
+  }
 
   render(){
   return (
-    <div className="App">
-      <button
-      onClick={this.changePage}
-      >
-        Trocar de página
-      </button>
-      
-      {this.state.page === "register" ?
-      <RegisterPage
-      name={this.state.inputName}
-      onChangeName = {this.onChangeInputName}
-
-      email={this.state.inputEmail}
-      onChangeEmail = {this.onChangeInputEmail}
-
-      createUser ={this.createUser}
-
-      />
-      :<UsersList/>
-      }
-      
+    <div className="App">     
+      {this.changePage()}
     </div>
   );
 }
