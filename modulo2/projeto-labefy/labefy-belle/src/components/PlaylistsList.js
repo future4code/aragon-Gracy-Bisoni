@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
+import PlaylistCard from "./PlaylistCard";
 
 const axiosAuth = {
     headers: {
@@ -8,16 +9,29 @@ const axiosAuth = {
     }
 };
 
-const PlaylistCard = styled.div`
-`
+// const PlaylistCard = styled.div`
+//     display: flex;
+//     justify-content: space-between;
+//     border: solid black 1px;
+//     width: 300px;
+//     height: 50px;
+//     align-items: center;
+//     margin: 10px;
+//     padding: 0 10px;
+// `
 
 export default class PlaylistsList extends React.Component {
 
     state = {
-        playlists: []
+        playlists: [],
+        musics:[]
     }
 
     componentDidMount() {
+        this.getAllPlaylists()
+    }
+
+    componentDidUpdate() {
         this.getAllPlaylists()
     }
 
@@ -39,6 +53,7 @@ export default class PlaylistsList extends React.Component {
 
     deletePlaylist = (playlistId) => {
         const url = `https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/${playlistId}`
+        if (window.confirm ("Certeza que quer deletar a playlist?")){
         axios
             .delete(
                 url, axiosAuth
@@ -51,27 +66,31 @@ export default class PlaylistsList extends React.Component {
                 alert(`Erro ao deletar playlist`)
                 console.log(err.res.data)
             })
+        }
     }
 
-    render() {
-        console.log(this.state.playlists)
 
-        const renderizaPlaylists = () =>{
+    render() {
+        
+        const renderPlaylists = () =>{
             return this.state.playlists.map((item) => {
             return (
-                <PlaylistCard key={item.id}>
-                    {item.name}
-                    <button
-                        onClick={() => this.deletePlaylist(item.id)}
-                    >Deletar</button>
+                <PlaylistCard 
+                key={item.id}
+                changePage={this.props.changePage}
+                name = {item.name}
+                playlistId={item.id}
+                deletePlaylist = {this.deletePlaylist}
+                >
+                    <p>{item.name}</p>
                 </PlaylistCard>)
         });
         }
         return (
             <div>
                 <h2>Lista de Playlists</h2>
-                {renderizaPlaylists()}
-                {renderizaPlaylists().length === 0 
+                {renderPlaylists()}
+                {renderPlaylists().length === 0 
                 && <div>Carregando...</div> }
             </div>
         )
