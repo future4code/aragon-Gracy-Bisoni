@@ -52,7 +52,7 @@ export default class Tracks extends React.Component {
         }
     }
 
-    changeInputValues = (ev) => {
+    handleInputValues = (ev) => {
         this.setState({[ev.target.name]: ev.target.value})
     }
 
@@ -108,7 +108,7 @@ export default class Tracks extends React.Component {
                         placeholder="Nome da música"
                         name="musicName"
                         value={this.state.musicName}
-                        onChange={this.changeInputValues}
+                        onChange={this.handleInputValues}
                         />
                     </div>
                     <div>
@@ -117,7 +117,7 @@ export default class Tracks extends React.Component {
                         placeholder="Nome do Artista"
                         name="artist"
                         value={this.state.artist}
-                        onChange={this.changeInputValues}
+                        onChange={this.handleInputValues}
                         />
                     </div>
                     <div>
@@ -126,7 +126,7 @@ export default class Tracks extends React.Component {
                         placeholder="URL da música"
                         name="url"
                         value={this.state.url}
-                        onChange= {this.changeInputValues}
+                        onChange= {this.handleInputValues}
                         />
                     </div>
                     <button type="submit"> Adicionar Música</button>
