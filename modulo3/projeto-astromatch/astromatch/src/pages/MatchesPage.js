@@ -3,6 +3,10 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import axios from "axios";
 import { BASE_URL, API_AUTH } from "../constants/urls";
+import styled from "styled-components";
+
+
+
 
 function MatchesPage () {
     const [matches, setMatches] = useState (undefined)
@@ -29,7 +33,7 @@ function MatchesPage () {
                     src={match.photo}
                     alt={`foto de ${match.name}`}
                     height={"30px"}
-                ></img>
+                />
                 <p>{match.name}</p>
                 <hr />
         </div>
