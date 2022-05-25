@@ -1,10 +1,26 @@
 import React from "react";
+import axios from "axios";
 import Header from '../../components/Header/Header'
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { goToHomePage } from "../../routes/coordinator";
 
 const AdminPage = () => {
+    
+    const navigate = useNavigate();
+    
+    useEffect (() => {
+        if(!localStorage.getItem('token')){
+            goToHomePage(navigate)
+        }
+    }, [])
+
+    //Não entendi como usa o history.push, ler melhor
+
+
     return (
         <>
-        <Header currentPage={"adminpage"}/>
+        <Header/>
         <hr/>
         <main>
             <div>
