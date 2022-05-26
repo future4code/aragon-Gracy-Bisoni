@@ -23,3 +23,21 @@ export const loginRequest = ( email, password, navigate) => {
         
 
 }
+
+export const deleteTrip = (tripId, getTripsData) => {
+    
+    const headers = {
+        headers: {
+            auth: localStorage.getItem("token")
+        }
+    };
+
+    axios.delete(`${BASE_URL}/${API_AUTH}/trips/${tripId}`, headers)
+        .then(() => {
+            alert("Trip removed successfully!");
+            getTripsData();
+        })
+        .catch((err) => {
+            alert(err.message);
+        });
+};
