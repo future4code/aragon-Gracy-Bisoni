@@ -41,3 +41,49 @@ export const deleteTrip = (tripId, getTripsData) => {
             alert(err.message);
         });
 };
+
+export const createTrip = (body, reset, getTripsData) => {
+    const headers = {
+        headers:{
+            auth:localStorage.getItem('token')
+        }
+    }
+
+    axios
+    .post(`${BASE_URL}/${API_AUTH}/trips`, body, headers)
+    .then((res) => {
+        alert("Trip created!")
+        reset()
+        getTripsData()
+    })
+    .catch((err) => {
+        alert("Error, try again")
+    })
+}
+
+export const decideCandidate = (tripId, candidateId, decision, getTripsDetail) => {
+    const headers = {
+        headers: {
+            auth: localStorage.getItem("token")
+        }
+    };
+
+    const body = {
+        approve: decision
+    };
+
+    axios.put(`${BASE_URL}/${API_AUTH}/trips/${tripId}/candidates/${candidateId}/decide`,
+        body,
+        headers
+    )
+        .then(() => {
+            decision ?
+            alert("Candidate in for trip!")
+            : alert("Reproved candidate");
+
+            getTripsDetail();
+        })
+        .catch((err) => {
+            alert(err.message);
+        });
+};
