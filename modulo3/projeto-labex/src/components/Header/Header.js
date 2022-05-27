@@ -65,7 +65,6 @@ const Header = (props) => {
     return (
         <header>
             <h1>LabeX</h1>
-            <hr/>
             {renderHeader}
         </header>
     )

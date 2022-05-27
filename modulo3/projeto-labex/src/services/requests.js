@@ -61,6 +61,19 @@ export const createTrip = (body, reset, getTripsData) => {
     })
 }
 
+export const apply = (body, tripId, reset) => {
+    axios
+    .post(`${BASE_URL}/${API_AUTH}/trips/${tripId}/apply`, body)
+    .then((res) => {
+        alert("Your application has been sent!")
+        reset()
+    })
+    .catch((err) => {
+        alert(err.res.message)
+    })
+
+}
+
 export const decideCandidate = (tripId, candidateId, decision, getTripsDetail) => {
     const headers = {
         headers: {
@@ -72,14 +85,15 @@ export const decideCandidate = (tripId, candidateId, decision, getTripsDetail) =
         approve: decision
     };
 
-    axios.put(`${BASE_URL}/${API_AUTH}/trips/${tripId}/candidates/${candidateId}/decide`,
+    axios
+    .put(`${BASE_URL}/${API_AUTH}/trips/${tripId}/candidates/${candidateId}/decide`,
         body,
         headers
     )
         .then(() => {
             decision ?
-            alert("Candidate in for trip!")
-            : alert("Reproved candidate");
+            alert("Candidate has been accepted for the trip")
+            : alert("Candidate has been repproved");
 
             getTripsDetail();
         })
