@@ -10,7 +10,11 @@ export const Feed = () => {
                 isProtected={true}
             />
             <hr/>
-            
+            <section>
+                <h2>Create new post</h2>
+            </section>
+            <hr/>
+            <h2>Posts list</h2> 
         </main>
     )
 }
