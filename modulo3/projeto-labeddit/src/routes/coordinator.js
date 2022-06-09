@@ -10,6 +10,6 @@ export const goToSignUp = (navigate) => {
     navigate("/signup")
 };
 
-// export const goToPostDetails = (navigate) => {
-//     navigate(`/post/${postID}`)
-// }
+export const goToPostDetails = (navigate,postId) => {
+    navigate(`/post/${postId}`)
+}
