@@ -24,3 +24,6 @@ This project were made with the follow tecnologies and libraries:
 - [React.js](https://pt-br.reactjs.org/)
 - [Axios](https://axios-http.com/ptbr/docs/intro)
 - [React Router DOM](https://v5.reactrouter.com/web/guides/quick-start)
+
+## Link Surge:
+- [Access the application](https://labeddit-socialmedia.surge.sh/login)

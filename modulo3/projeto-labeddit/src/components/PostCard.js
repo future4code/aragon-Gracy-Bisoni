@@ -5,6 +5,7 @@ import { GlobalContext } from "../global/GlobalContext";
 import { goToPostDetails } from "../routes/coordinator";
 import {format} from "date-fns"
 import { requestChangePostVote, requestCreatePostVote, requestRemovePostVote } from "../services/requests";
+import { Typography,Button, Stack, Avatar } from "@mui/material";
 
 export const PostCard = (props) => {
     const navigate = useNavigate()
@@ -63,41 +64,75 @@ export const PostCard = (props) => {
     }
 
     const renderVoteButtons = props.isFeed && (
-        <>
+        <Stack
+            sx={{
+                display:'flex', 
+                flexDirection:'row', 
+                alignItems:'center', 
+                justifyContent:'center',
+            }}
+        >
             {userVote && isDisliked? 
-                <button onClick={() => removeVote("dislike")}>Remove dislike</button>
-                : <button onClick={() => chooseVote("dislike")}>
+                <Button 
+                    sx={{width:'200px'}}
+                    onClick={() => removeVote("dislike")}>Remove dislike</Button>
+                : <Button
+                    sx={{width:'200px'}} 
+                    onClick={() => chooseVote("dislike")}>
                     {isLiked? `Change your vote to DISLIKE`
                         : `Dislike`
                     }
-                </button>
+                </Button>
             }
             {userVote && isLiked?
-                <button onClick={()=> removeVote("like")}>Remove like</button>
-                : <button onClick={() => chooseVote("like")}>
+                <Button 
+                    sx={{width:'200px'}}
+                    onClick={()=> removeVote("like")}>Remove like</Button>
+                : <Button 
+                    sx={{width:'200px'}}
+                    onClick={() => chooseVote("like")}>
                     {isDisliked? `Change your vote to LIKE`
                         : `Like`
                     }
-                </button>
+                </Button>
             }
         
-        </>
+        </Stack>
     )
 
     return (
-        <>
-            <h3>{title}</h3>
-            <h5>Author: </h5>{userId}
-            <p>Created at {formatedDate}</p>
+        <Stack
+            sx={{
+                marginLeft:'20px',
+                border:'1px dashed darkgrey'
+            }}
+            
+        >
+            <Typography 
+                align="center"
+                variant="h5"
+                sx={{
+                    marginLeft:'20px'
+                }}                
+                >"{title.toUpperCase()}"</Typography>
+            <Typography>Author: </Typography>{userId}
+            <Typography>Created at {formatedDate}</Typography>
 
             {/* Gerar imagem aleatória no picsum:                
                 Coloca a query 'random', em seguida passa o id do usuário. O retorno é que 
                 cada post vai ter uma foto aleatória característica.*/}
 
-            <img src={"https://picsum.photos/200/200?random=" + id} alt=""/>
-            <p>Description: {body}</p>
+            <Avatar
+                sx={{
+                    width: '200px',
+                    height: '200px',
+                    alignSelf:'center'
+                }}
 
-            <p>Votes: {voteSum ? voteSum : 0}</p>
+                src={"https://picsum.photos/200/200?random=" + id} alt=""/>
+            <Typography>Description: {body}</Typography>
+
+            <Typography>Votes: {voteSum ? voteSum : 0}</Typography>
             {/* <button>Dislike</button>
             <br />
             <button>Like</button> */}
@@ -106,10 +141,14 @@ export const PostCard = (props) => {
             {renderVoteButtons}
 
 
-            <p>Comments: {commentCount ? commentCount : 0}</p>
+            <Typography>Comments: {commentCount ? commentCount : 0}</Typography>
 
-            {props.isFeed && <button onClick={goToComments}>Open comments</button>}
+            {props.isFeed && 
+            <Button 
+                onClick={goToComments}
+                sx={{width:'200px', alignSelf:'center'}}
+                >Open comments</Button>}
             <hr />
-        </>
+        </Stack>
     );
 }

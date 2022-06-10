@@ -3,8 +3,16 @@ import { useState } from "react";
 import axios from "axios";
 import { GlobalContext } from "./GlobalContext";
 import { BASE_URL } from "../constants/urls";
+import { createTheme } from "@mui/material";
+import '@fontsource/roboto/500.css'
 
 export const GlobalState = (props) => {
+    const theme = createTheme({
+        typography: {
+            fontFamily: 'Roboto'
+        }
+    })
+
     const [posts, setPosts] = useState([]);
     const [post, setPost] = useState({})
     const [comments, setComments] = useState([])
