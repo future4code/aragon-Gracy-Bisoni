@@ -4,7 +4,7 @@ const validateInput = (input) => {
     let keys = Object.keys(input)
     
     keys.forEach((key) => {
-        if(input[`${key}`] === undefined) {
+        if(input[key] === undefined) {
             isError = true
             errors.push(key)
         }
