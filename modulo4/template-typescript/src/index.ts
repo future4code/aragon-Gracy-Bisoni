@@ -6,13 +6,13 @@ console.log(ano)
 // usando o operador "|" na tipagem, eu posso atribuir mais de um tipo de valor possível a variável
 
 // Exercício 2
-type pessoa = {
+type Pessoa = {
     nome: string
     idade: number
     corFavorita: string
 }
 
-const eu:pessoa = {
+const eu:Pessoa = {
     nome: 'Belle',
     idade: 24,
     corFavorita:'lilás'
@@ -28,7 +28,7 @@ console.log(eu)
 // parte 2
 // array de números ordenados, const "soma"
 
-type estatisticas = {
+type Estatisticas = {
     maior: number,
     menor: number,
     media: number
@@ -47,7 +47,7 @@ function obterEstatisticas(numeros:Array<number>):{} {
         soma += num
     }
 
-    const estatisticas:estatisticas = {
+    const estatisticas:Estatisticas = {
         maior: numerosOrdenados[numeros.length - 1],
         menor: numerosOrdenados[0],
         media: soma / numeros.length
@@ -60,12 +60,12 @@ console.log(obterEstatisticas([2,5,9,6]))
 
 // Exercício 4
 // parte 1
-type posts = {
+type Posts = {
     autor:string,
     texto:string
 }
 
-const posts:posts[] = [
+const posts:Posts[] = [
     {
       autor: "Alvo Dumbledore",
       texto: "Não vale a pena viver sonhando e se esquecer de viver"
@@ -90,7 +90,7 @@ const posts:posts[] = [
 
   // parte 2
   // uma array de objetos posts e um autor, retorna os posts que contém o mesmo autor de entrada
-  function buscarPostsPorAutor(posts: posts[], autorInformado:string):posts[] {
+  function buscarPostsPorAutor(posts: Posts[], autorInformado:string):Posts[] {
     return posts.filter(
       (post) => {
         return post.autor === autorInformado
