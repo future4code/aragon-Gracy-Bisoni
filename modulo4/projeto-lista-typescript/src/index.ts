@@ -181,5 +181,39 @@ function ajustaProduto(produtos:Produto[]):Produto[]{
 console.log(ajustaProduto(produtos))
 
 // Exercício 8
+function checkIdStatus(birthdayDate:string, idDate:string):boolean{
+    const birthdayDateNumber:Array<number> = birthdayDate.split('/').map((num)=> {
+        return Number(num)
+    })
+
+    const idDateNumber:Array<number> = idDate.split('/').map((num)=>{
+        return Number(num)
+    })
+
+    const currentYear:number = new Date().getFullYear()
+
+    const idAge:number = currentYear - idDateNumber[2]
+    const currentAge:number = currentYear - birthdayDateNumber[2]
+
+    if(currentAge<=20 && idAge>=5 || (currentAge > 20 && currentAge <= 50) && idAge >= 10 || currentAge > 50 && idAge >= 15){
+        return true
+    } else {
+        return false
+    }
+    
+}
+
+console.log(checkIdStatus("20/10/1997", "05/03/2005"))
 
 // Exercício 9
+function anagrama(palavra:string):number{
+    let array= palavra.split('')
+    let fatorial = array.length
+    let resultado = fatorial
+    for(let i=fatorial-1; i>1; i--){
+        resultado*=i
+    }
+    return resultado
+}
+console.log(anagrama('boi'))
+console.log(anagrama('comida'))
