@@ -53,16 +53,41 @@ app.put('/todos/:id', (req:Request, res: Response)=> {
     const newList = toDos.map((toDo)=> {
         if (toDo.id === id){
           toDo.completed = !toDo.completed
-          return toDo
         } 
+        return toDo
     })
 
     console.log(newList)
-    res.status(200).send({ message:'Task Status updated!', toDos: toDos })
+    res.status(200).send({ message:'Task Status updated!', toDos: newList })
 })
 
 // Exercício 6
+app.delete('/todos/:id', (req: Request, res: Response)=> {
+    const id = Number(req.params.id)
 
+    const newList = toDos.filter((toDo)=> {
+        return toDo.id !== id
+    })
+
+    res.status(200).send({
+        message: 'Task deleted successfully!',
+        updatedList: newList
+    })
+})
+
+// Exercício 7
+app.get('/todos', (req: Request, res: Response)=> {
+    const status = req.query.completed as string
+
+    const filteredList = toDos.filter((toDo)=> {
+        if(status !== undefined){
+            return toDo.completed.toString() === status
+        }
+    })
+    res.status(200).send({
+        toDos: filteredList
+    })
+})
 
 
 
