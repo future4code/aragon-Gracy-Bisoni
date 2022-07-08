@@ -5,7 +5,7 @@ This is a simplified version of a banking system that uses Node.JS and Typescrip
 ### Accounts:
 * name
 * CPF (unique)
-* birth_date (age must be > 18 years)
+* birthDate(age must be > 18 years)
 * balance (starts from zero)
 * statement (array of transactions)
     * value
@@ -13,11 +13,11 @@ This is a simplified version of a banking system that uses Node.JS and Typescrip
     * description
 ## Features
 ### Create Account:
-- Insert name, CPF and birth_date
+- Insert name, CPF and birthDate
 ### Get balance:
-- Insert name and CPF
+- Insert user ID
 ### Add balance:
-- Insert name, CPF and value
+- Insert ID and balance value
 ### Pay the bill:
 - Insert value, description and (optional) date of payment;
 - If the payment date is not entered, it is considered payment on the current day;

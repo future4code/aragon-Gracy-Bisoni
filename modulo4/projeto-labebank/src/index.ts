@@ -7,6 +7,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+// Cria usuário (Create new account)
 app.post('/users', (req: Request, res: Response) => {
     let errorCode = 400
     try {
@@ -65,6 +66,7 @@ app.post('/users', (req: Request, res: Response) => {
     }
 })
 
+// Pega a lista de usuários (Get users list)
 app.get('/users', (req: Request, res: Response) => {
     try {
         if (!users.length) {
@@ -79,6 +81,7 @@ app.get('/users', (req: Request, res: Response) => {
     }
 })
 
+// Pega o saldo do usuário passado pelo path (Return balance of client informed by ID)
 app.get('/users/balance/:id', (req: Request, res: Response)=> {
     try {
         const id = Number(req.params.id)
@@ -109,6 +112,7 @@ app.get('/users/balance/:id', (req: Request, res: Response)=> {
     }
 })
 
+// Adiciona um valor ao saldo (Add a value to balance)
 app.put('/users/:id', (req: Request, res: Response)=> {
     try {
         const id = Number(req.params.id)
@@ -142,15 +146,21 @@ app.put('/users/:id', (req: Request, res: Response)=> {
                 return user
             })
             
-            res.status(201).send({
+            res.status(200).send({
                 message: "Success",
-                user: result
+                newBalance: `R$ ${result[userIndex].balance},00`,
+                user: result[userIndex]
             }) 
         }
 
     } catch (error) {
         res.status(res.statusCode).send(error.message)
     }
+})
+
+// Pay a bill
+app.put('/users/:id/pay', (req:Request, res: Response)=> {
+    
 })
 
 
