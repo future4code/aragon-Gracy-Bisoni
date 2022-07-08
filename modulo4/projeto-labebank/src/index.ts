@@ -11,7 +11,7 @@ app.post('/users', (req:Request, res:Response)=> {
     let errorCode = 400
     try {
         const { name, CPF, birth_date } = req.body
-        const age:number = new Date().get
+        
         if(!name || !CPF || !birth_date){
             errorCode = 422
             throw new Error("Insert name, CPF and birth date.");
