@@ -86,7 +86,7 @@ app.get('/users/balance/:id', (req: Request, res: Response)=> {
 
     if(!id){
         res.statusCode = 422
-        throw new Error("ID was not informed");
+        throw new Error("Need to add a valid ID, number type");
     }
 
     if(userIndex < 0){
@@ -109,6 +109,49 @@ app.get('/users/balance/:id', (req: Request, res: Response)=> {
     }
 })
 
+app.put('/users/:id', (req: Request, res: Response)=> {
+    try {
+        const id = Number(req.params.id)
+        const {balance} = req.body
+        const userIndex = users.findIndex(user => user.id === id)
+
+        if(!id || !balance){
+            res.statusCode=422
+            throw new Error("Insert a valid ID and balance value");
+        }
+
+        if(typeof balance !== 'number'){
+            res.statusCode = 422
+            throw new Error("Balance needs to be number type");
+        } else if (balance <= 0){
+            res.statusCode = 422
+            throw new Error("Balance value must be greater than zero");
+        }
+
+        if(userIndex < 0) {
+            res.statusCode = 404
+            throw new Error("User not found");
+        } else {
+
+            const result = users.filter((user)=> {
+                if (user.id === id){
+                    return user
+                }
+            }).map((user)=> {
+                user.balance += balance
+                return user
+            })
+            
+            res.status(201).send({
+                message: "Success",
+                user: result
+            }) 
+        }
+
+    } catch (error) {
+        res.status(res.statusCode).send(error.message)
+    }
+})
 
 
 
