@@ -153,7 +153,35 @@ app.put("/users/:id", (req: Request, res: Response) => {
 })
 
 // Exercício 5
+app.delete('/users/:id',(req:Request, res:Response)=> {
+    let errorCode = 400
+    try {
+        const id = Number(req.params.id)
 
+        if(typeof id !== 'number'){
+            errorCode = 422;
+            throw new Error("Invalid ID type");
+        };
+
+        const indexUser = users.findIndex((user)=>{
+            return user.id === id
+        })
+
+        if(indexUser<0){
+            errorCode = 404
+            throw new Error("User not found");
+        }
+
+        users.splice(indexUser, 1)
+
+        res.status(200).send({
+            message: "User removed!",
+            users: users
+          });
+    } catch (err) {
+        res.status(errorCode).send({message: err.message})
+    }
+})
 
 app.listen(3003, () => console.log('Server is running on port 3003.'))
 
