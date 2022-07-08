@@ -61,7 +61,7 @@ app.post('/users', (req: Request, res: Response) => {
 
     } catch (error) {
         console.log(error)
-        res.status(500).send(error.message)
+        res.status(res.statusCode).send(error.message)
     }
 })
 
@@ -75,10 +75,39 @@ app.get('/users', (req: Request, res: Response) => {
             users: users
         })
     } catch (error) {
-        res.status(statusCode).send(error.message)
+        res.status(res.statusCode).send(error.message)
     }
 })
 
+app.get('/users/balance/:id', (req: Request, res: Response)=> {
+    try {
+        const id = Number(req.params.id)
+    const userIndex = users.findIndex(user => user.id === id)
+
+    if(!id){
+        res.statusCode = 422
+        throw new Error("ID was not informed");
+    }
+
+    if(userIndex < 0){
+        res.statusCode = 404
+        throw new Error("User not found")
+    }
+
+    const result = users.filter((user)=> {
+        return user.id === id
+    }).map((user)=> {
+        return user.balance
+    })
+
+    res.status(200).send({
+        user: users[userIndex].name,
+        balance: `R$${result},00`
+    })
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+})
 
 
 
