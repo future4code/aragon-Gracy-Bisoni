@@ -1,13 +1,14 @@
 export type Transaction={
     value: number,
-    date: Date,
+    date: string,
     description:string
 }
 
 export type User= {
+    id: number,
     name:string,
     CPF: string,
-    birth_date: string,
+    birthDate: string,
     balance:number,
     statement: Transaction[]
 }

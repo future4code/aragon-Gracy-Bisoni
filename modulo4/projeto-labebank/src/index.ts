@@ -1,29 +1,58 @@
 import express, { Response, Request } from "express";
 import cors from 'cors'
-import { users  } from "./data";
+import { users } from "./data";
 import { User, Transaction } from './types'
 
 const app = express()
 app.use(cors())
 app.use(express.json())
 
-app.post('/users', (req:Request, res:Response)=> {
+app.post('/users', (req: Request, res: Response) => {
     let errorCode = 400
     try {
-        const { name, CPF, birth_date } = req.body
-        
-        if(!name || !CPF || !birth_date){
-            errorCode = 422
+        const { name, CPF, birthDate } = req.body
+        const indexCPF = users.findIndex(val => val.CPF === CPF)
+        const birthDateSplit = birthDate.split('/')
+        const nameSplit = name.split('')
+        const currentYear = new Date().getFullYear()
+        const age = currentYear - birthDateSplit[2]
+
+
+        if (!name || !CPF || !birthDate) {
+            res.statusCode = 422
             throw new Error("Insert name, CPF and birth date.");
-            
         }
-        users.push({
-            name,
-            CPF, 
-            birth_date, 
-            balance:0,
-            statement:[]  
-        })
+
+        if (typeof name !== 'string' || typeof CPF !== 'string' || typeof birthDate !== 'string') {
+            res.statusCode = 422
+            throw new Error("Name, CPF and birth date must be string type");
+        }
+
+        if (age < 18) {
+            res.statusCode = 422
+            throw new Error("User age must be over than 18 years old");
+        }
+
+        if (nameSplit.length < 3) {
+            res.statusCode = 422
+            throw new Error("User name must have at least 3 characters");
+        }
+
+        if (indexCPF < 0) {
+            const newUser:User= {
+                id: users.length + 1,
+                name,
+                CPF,
+                birthDate,
+                balance: 0,
+                statement: []
+            }
+
+            users.push(newUser)
+        } else{
+            res.statusCode = 409
+            throw new Error("CPF already exists");
+        }
 
         res.status(201).send({
             message: 'Account created!',
@@ -36,9 +65,9 @@ app.post('/users', (req:Request, res:Response)=> {
     }
 })
 
-app.get('/users', (req: Request, res:Response)=>{
+app.get('/users', (req: Request, res: Response) => {
     try {
-        if(!users.length){
+        if (!users.length) {
             res.statusCode = 404
             throw new Error('No accounts found');
         }
@@ -46,7 +75,7 @@ app.get('/users', (req: Request, res:Response)=>{
             users: users
         })
     } catch (error) {
-        res.status(400).send(error.message)
+        res.status(statusCode).send(error.message)
     }
 })
 
@@ -54,4 +83,4 @@ app.get('/users', (req: Request, res:Response)=>{
 
 
 
-app.listen(3003, ()=> console.log ('Server is running on port 3003.'))
+app.listen(3003, () => console.log('Server is running on port 3003.'))
