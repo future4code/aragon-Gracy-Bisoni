@@ -46,22 +46,58 @@ app.get('/users', (req: Request, res: Response) => {
 })
 
 // Exercício 3
-app.post('/users', (req: Request, res: Response)=> {
+app.post("/users", (req: Request, res: Response) => {
     try {
-        const {name, email, role, age} = req.body
-        if (name && email && role && age) {
-            if(typeof name === 'string' && typeof email === 'string'){
-                if(typeof age === 'number'){
-                    
-                }
-            }
-        } else {
-            throw new Error("Insert name, email, role and age");
-            
+      const { name, email, age } = req.body
+      let role = req.body.role as string
+      
+      if (!name || !email || !age || !role) {
+        throw new Error("Missing data in body to create user")
+      }
+  
+      if (typeof name !== "string") {
+        throw new Error("Invalid name")
+      }
+  
+      if (typeof email !== "string") {
+        throw new Error("Invalid email")
+      }
+  
+      if (typeof age !== "number") {
+        throw new Error("Invalid age")
+      }
+  
+      role = role.toUpperCase()
+      if (!(role in USER_ROLE)) {
+        throw new Error("Invalid type")
+      }
+  
+      users.forEach(user => {
+        if (user.email === email) {
+          throw new Error("Email already exists")
         }
-    } catch (error) {
-        
+      })
+  
+      const newUser: User = {
+        id: users.length + 1,
+        name,
+        email,
+        age,
+        role: role === USER_ROLE.NORMAL
+          ? USER_ROLE.NORMAL
+          : USER_ROLE.ADMIN
+      }
+  
+      users.push(newUser)
+  
+      res.status(201).send({
+        message: "User created successfully",
+        user: newUser
+      })
+    } catch (err) {
+      res.status(400).send(err.message)
     }
-})
+  })
+  
 app.listen(3003, ()=> console.log('Server is running on port 3003.'))
 
