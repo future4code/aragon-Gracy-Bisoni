@@ -182,6 +182,39 @@ app.put('/collaborators/:id', async (req: Request, res: Response)=> {
 
 })
 
+// Exercício 4
+app.delete('/collaborators/:id', async (req: Request, res: Response)=> {
+    let errorCode = 400
+    try {
+        const id = req.params.id
+
+        if(!id){
+            errorCode = 422
+            throw new Error("Missing param: id"); 
+        }
+
+        const [collaborator] = await connection.raw(`
+            SELECT * FROM Collaborators
+            WHERE id="${id}";
+        `)
+
+        if(collaborator.length === 0){
+            errorCode = 404
+            throw new Error("User not found");
+        }
+
+        await connection.raw(`
+            DELETE FROM Collaborators
+            WHERE id="${id}";
+        `)
+
+        res.status(200).send({message: "User successfully deleted!"})
+
+    } catch (error) {
+        res.status(errorCode).send({message: error.message})
+    }
+})
+
 app.listen(process.env.PORT || 3003, () => {
   console.log(`Server running on port ${process.env.PORT || 3003}`)
 });
