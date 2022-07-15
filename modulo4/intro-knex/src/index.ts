@@ -62,6 +62,7 @@ app.get('/collaborators', async (req: Request, res: Response)=> {
     }
 })
 
+// Exercício 2
 app.post('/collaborators',async (req:Request, res: Response) => {
     let errorCode = 400
     try {
@@ -122,6 +123,63 @@ app.post('/collaborators',async (req:Request, res: Response) => {
     } catch (error) {
         res.status(errorCode).send({message: error.message})
     }
+})
+
+// Exercício 3
+app.put('/collaborators/:id', async (req: Request, res: Response)=> {
+    let errorCode = 400
+    try {
+        const id = req.params.id
+        const newEmail = req.body.email as string
+
+        if(!newEmail){
+            errorCode = 422
+            throw new Error("Missing params");
+        }
+
+        if(typeof newEmail !== 'string'){
+            errorCode = 422
+            throw new Error("Email needs to be string type");
+        }
+
+        if(!newEmail.includes('@')){
+            errorCode = 422
+            throw new Error("Invalid email");
+        }
+
+        const [collaborator] = await connection.raw(`
+            SELECT * FROM Collaborators
+            WHERE id="${id}";
+        `)
+
+        if(collaborator.length === 0){
+            errorCode=404
+            throw new Error("Collaborator not found");
+        }
+
+        const [existingEmail] = await connection.raw(`
+            SELECT * FROM Collaborators
+            WHERE email="${newEmail}"
+        `)
+
+        if(existingEmail.length > 0){
+            errorCode = 409
+            throw new Error("Email already exists");
+        }
+
+        await connection.raw(`
+            UPDATE Collaborators
+            SET email="${newEmail}"
+            WHERE id="${id}";
+        `)
+
+        res.status(200).send({
+            message: "Email updated successfully!",
+        })
+    } catch (error) {
+        res.status(errorCode).send({message: error.message})
+    }
+
 })
 
 app.listen(process.env.PORT || 3003, () => {
