@@ -1,6 +1,7 @@
 import express, {Request, Response }from "express";
 import cors from "cors";
 import connection from "./database/connection";
+import { Employee } from "./types";
 
 const app = express();
 
@@ -32,14 +33,14 @@ app.get('/produtos',async (req:Request, res:Response)=> {
 })
 
 // Exercício 1
-app.get('/colaborators', async (req: Request, res: Response)=> {
+app.get('/collaborators', async (req: Request, res: Response)=> {
     let errorCode = 400
     try {
         const busca = req.query.busca as string
 
         if(busca){
             const [result] = await connection.raw(`
-                SELECT * FROM Colaborators
+                SELECT * FROM Collaborators
                 WHERE LOWER(name) LIKE "%${busca.toLowerCase()}%";
             `)
 
@@ -49,7 +50,7 @@ app.get('/colaborators', async (req: Request, res: Response)=> {
         }
 
         const [result] = await connection.raw(`
-            SELECT * FROM Colaborators;
+            SELECT * FROM Collaborators;
         `)
 
         res.status(200).send({
@@ -61,7 +62,67 @@ app.get('/colaborators', async (req: Request, res: Response)=> {
     }
 })
 
+app.post('/collaborators',async (req:Request, res: Response) => {
+    let errorCode = 400
+    try {
+        const {name, email} = req.body
 
+        if(!name || !email){
+            errorCode = 422
+            throw new Error("Variables name and email must exist")
+        }
+
+        if(typeof name !== 'string' || typeof email !== 'string'){
+            errorCode = 422
+            throw new Error("Name and email need to be string type");
+        }
+
+        if(!email.includes('@')){
+            errorCode = 422
+            throw new Error("Invalid email");
+        }
+
+        const [users] = await connection.raw(`
+            SELECT * FROM Collaborators
+            WHERE email = "${email}";
+        `)
+
+        if(users.length > 0) {
+            errorCode = 409
+            throw new Error("Email already exists");
+        }
+
+        const [collaborators] = await connection.raw(`
+            SELECT * FROM Collaborators
+        `)
+
+        if(name.length < 4){
+            errorCode = 422
+            throw new Error("Name must have at least 4 characters");
+        }
+
+        const id = "00" + (collaborators.length + 1)
+
+        const newCollaborator:Employee = {
+            id,
+            name,
+            email
+        }
+
+        await connection.raw(`
+            INSERT INTO Collaborators (id, name, email)
+            VALUES("${newCollaborator.id}", "${newCollaborator.name}", "${newCollaborator.email}");
+        `)
+
+        res.status(201).send({
+            message: "New collaborator was added successfully!",
+            collaborator: newCollaborator
+        })
+
+    } catch (error) {
+        res.status(errorCode).send({message: error.message})
+    }
+})
 
 app.listen(process.env.PORT || 3003, () => {
   console.log(`Server running on port ${process.env.PORT || 3003}`)
