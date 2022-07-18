@@ -7,6 +7,7 @@ import { getResponsible } from "./endpoints/getResponsible";
 import { addResponsible } from "./endpoints/addResponsible";
 import { editNickname } from "./endpoints/editNickname";
 import { editTaskStatus } from "./endpoints/editTaskStatus";
+import { deleteTask } from "./endpoints/deleteTask";
 
 const app = express();
 
@@ -38,4 +39,5 @@ app.put("/users/:userId", editNickname)
 // Endpoint 6
 app.put("/tasks/:taskId", editTaskStatus)
 
-// Siga o exemplo do ping acima e monte seus endpoints abaixo!
+// Endpoint 7
+app.delete("/tasks/:taskId", deleteTask)
