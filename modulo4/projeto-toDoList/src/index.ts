@@ -3,6 +3,7 @@ import cors from "cors";
 import { ping } from "./endpoints/ping";
 import { getUsers } from "./endpoints/getUsers";
 import { getToDos } from "./endpoints/getToDos";
+import { getResponsible } from "./endpoints/getResponsible";
 
 const app = express();
 
@@ -21,5 +22,8 @@ app.get("/users", getUsers)
 
 // Endpoint 2
 app.get("/tasks", getToDos)
+
+// Endpoint 3
+app.get("/tasks/:taskId/users", getResponsible)
 
 // Siga o exemplo do ping acima e monte seus endpoints abaixo!
