@@ -4,6 +4,7 @@ import { ping } from "./endpoints/ping";
 import { getUsers } from "./endpoints/getUsers";
 import { getToDos } from "./endpoints/getToDos";
 import { getResponsible } from "./endpoints/getResponsible";
+import { addResponsible } from "./endpoints/addResponsible";
 
 const app = express();
 
@@ -25,5 +26,8 @@ app.get("/tasks", getToDos)
 
 // Endpoint 3
 app.get("/tasks/:taskId/users", getResponsible)
+
+// Endpoint 4
+app.post("/tasks/:taskId/users", addResponsible)
 
 // Siga o exemplo do ping acima e monte seus endpoints abaixo!
