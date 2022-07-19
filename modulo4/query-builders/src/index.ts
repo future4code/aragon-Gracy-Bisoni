@@ -3,6 +3,8 @@ import cors from "cors";
 import { ping } from "./endpoints/ping";
 import { createPerfume } from "./endpoints/createPerfume";
 import { getPerfumes } from "./endpoints/getPerfumes";
+import { editPrice } from "./endpoints/editPrice";
+import { deletePerfume } from "./endpoints/deletePerfume";
 
 const app = express();
 
@@ -20,5 +22,11 @@ app.post("/perfumes", createPerfume)
 
 //Read (Get) perfumes
 app.get("/perfumes", getPerfumes)
+
+//Update price
+app.put("/perfumes/:perfumeId", editPrice)
+
+//Delete perfume
+app.delete("/perfumes/:perfumeId", deletePerfume)
 
 // Implemente seus endpoints abaixo
