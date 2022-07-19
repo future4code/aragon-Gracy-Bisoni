@@ -16,7 +16,13 @@ export const deletePerfume = async (req: Request, res: Response) => {
             throw new Error("Item não encontrado.")
         }
 
-        await connection
+        await connection(TABLE_PERFUMES)
+            .delete()
+            .where({ id: perfumeId })
+        
+        res.status(200).send({
+            message: "Perfume deletado com sucesso!"
+        })
 
     } catch (error) {
         res.status(errorCode).send({
