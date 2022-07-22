@@ -19,7 +19,7 @@ export const createUser = async (req: Request, res: Response) => {
             password
         }
 
-        await connection("Labe_Users")
+        await connection(TABLE_USERS)
         .insert({
             id: newUser.id,
             email: newUser.email,
