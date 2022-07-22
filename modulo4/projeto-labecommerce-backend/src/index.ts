@@ -3,6 +3,8 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import { ping } from './endpoints/ping'
 import { createUser } from './endpoints/createUser'
+import { getUsers } from './endpoints/getUsers'
+import { insertProduct } from './endpoints/insertProduct'
 
 dotenv.config()
 const app = express()
@@ -18,3 +20,9 @@ app.get("/ping", ping)
 
 // Endpoint 1
 app.post('/users', createUser)
+
+// Endpoint 2
+app.get('/users', getUsers)
+
+// Endpoint 3
+app.post('/product', insertProduct)
