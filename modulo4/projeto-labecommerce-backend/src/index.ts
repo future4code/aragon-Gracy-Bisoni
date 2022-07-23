@@ -25,4 +25,4 @@ app.post('/users', createUser)
 app.get('/users', getUsers)
 
 // Endpoint 3
-app.post('/product', insertProduct)
+app.post('/products', insertProduct)
