@@ -6,6 +6,7 @@ import { createUser } from './endpoints/createUser'
 import { getUsers } from './endpoints/getUsers'
 import { insertProduct } from './endpoints/insertProduct'
 import { getProducts } from './endpoints/getProducts'
+import { registerPurchase } from './endpoints/registerPurchase'
 
 dotenv.config()
 const app = express()
@@ -28,5 +29,9 @@ app.get('/users', getUsers)
 // Endpoint 3
 app.post('/products', insertProduct)
 
-// Endpoind 4
+// Endpoint 4
 app.get('/products', getProducts)
+
+// Endpoint 5
+app.post('/purchases', registerPurchase)
+
