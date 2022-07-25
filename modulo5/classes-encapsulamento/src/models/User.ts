@@ -5,9 +5,6 @@ export type TUser = {
 }
 
 export class User {
-    // public id: string
-    // public email: string
-    // private password: string
     constructor(
         private id: string,
         private email: string,
