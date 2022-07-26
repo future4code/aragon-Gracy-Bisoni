@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import connection from "../database/connection"
+import { PurchaseDatabase } from "../database/PurchaseDatabase"
 import { TABLE_PRODUCTS, TABLE_PURCHASES, TABLE_USERS } from "../database/tableNames"
 import { Product } from "../models/Product"
 import { Purchase } from "../models/Purchase"
@@ -61,13 +62,17 @@ export const createPurchase = async (req: Request, res: Response) => {
             product.getPrice() * quantity
         )
 
-        await connection(TABLE_PURCHASES).insert({
-            id: purchase.getId(),
-            user_id: purchase.getUserId(),
-            product_id: purchase.getProductId(),
-            quantity: purchase.getQuantity(),
-            total_price: purchase.getTotalPrice()
-        })
+        // await connection(TABLE_PURCHASES).insert({
+        //     id: purchase.getId(),
+        //     user_id: purchase.getUserId(),
+        //     product_id: purchase.getProductId(),
+        //     quantity: purchase.getQuantity(),
+        //     total_price: purchase.getTotalPrice()
+        // })
+        
+        const purchaseDatabase = new PurchaseDatabase ()
+
+        await purchaseDatabase.createPurchase(purchase)
 
         res.status(201).send({ message: "Compra registrada", purchase: purchase })
     } catch (error) {
