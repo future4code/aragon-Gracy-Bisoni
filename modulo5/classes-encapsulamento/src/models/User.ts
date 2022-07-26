@@ -26,4 +26,16 @@ export class User {
     public getPassword(){
         return this.password
     }
+
+    public setId(newId: string) {
+        this.id = newId
+    }
+
+    public setEmail(newEmail: string) {
+        this.email = newEmail
+    }
+
+    public setPassword(newPassword: string) {
+        this.password = newPassword
+    }
 }
