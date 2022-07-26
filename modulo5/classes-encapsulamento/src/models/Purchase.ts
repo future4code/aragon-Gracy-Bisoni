@@ -43,6 +43,25 @@ export class Purchase {
         return this.totalPrice
     }
 
+    public setId(newId: string) {
+        this.id = newId
+    }
+
+    public setUserId(newUserId: string) {
+        this.userId = newUserId
+    }
+
+    public setProductId(newProductId: string) {
+        this.productId = newProductId
+    }
+
+    public setQuantity(newQuantity: number) {
+        this.quantity = newQuantity
+    }
+
+    public setTotalPrice(newTotalPrice: number) {
+        this.totalPrice = newTotalPrice
+    }
     
 }
 
