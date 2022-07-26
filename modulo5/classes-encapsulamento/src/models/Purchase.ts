@@ -42,6 +42,8 @@ export class Purchase {
     public getTotalPrice(){
         return this.totalPrice
     }
+
+    
 }
 
 
