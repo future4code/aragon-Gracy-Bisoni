@@ -1,7 +1,5 @@
 import { Request, Response } from "express"
-import connection from "../database/connection"
 import { ProductDatabase } from "../database/ProductDatabase"
-import { TABLE_PRODUCTS } from "../database/tableNames"
 import { Product } from "../models/Product"
 
 export const createProduct = async (req: Request, res: Response) => {

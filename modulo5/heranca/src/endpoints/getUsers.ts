@@ -1,6 +1,4 @@
 import { Request, Response } from "express"
-import connection from "../database/connection"
-import { TABLE_USERS } from "../database/tableNames"
 import { UserDatabase } from "../database/UserDatabase"
 
 export const getUsers = async (req: Request, res: Response) => {
