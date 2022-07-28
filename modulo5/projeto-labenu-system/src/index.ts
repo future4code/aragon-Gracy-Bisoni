@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import { getStudents } from './endpoints/getStudents'
 import { getClassrooms } from './endpoints/getClassrooms'
+import { getActiveClasses } from './endpoints/getActiveClasses'
 
 dotenv.config()
 const app = express()
@@ -12,8 +13,11 @@ app.use(cors())
 
 // Endpoint 1 - Create Class
 
-// Endpoint 2 - GET (all)CLASSROOMS -> falta selecionar só as ativas
+// Endpoint extra - GET (all)CLASSROOMS
 app.get('/classrooms', getClassrooms)
+
+// Endpoint 2 - Get Active Classes
+app.get('/classrooms/active', getActiveClasses)
 
 // Endpoint 3 - Change class module - PUT
 

@@ -1,4 +1,4 @@
-import { Classroom } from "../models/Classroom";
+import { Classroom, MODULE } from "../models/Classroom";
 import { BaseDatabase } from "./BaseDatabase";
 
 export class ClassroomDatabase extends BaseDatabase{
@@ -8,4 +8,14 @@ export class ClassroomDatabase extends BaseDatabase{
     public async getAll() {
         return super.getAll()
     }
+
+    public async getActiveClasses() {
+        const result = await BaseDatabase
+        .connection(ClassroomDatabase.TABLE_CLASSROOMS)
+        .select()
+        .where("module", ">", "0")
+
+        return result
+    }
+
 }
