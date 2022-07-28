@@ -24,4 +24,10 @@ export abstract class BaseDatabase {
   
         return result
      }
+
+     protected async create(item: any) {
+        await BaseDatabase
+           .connection(this.TABLE_NAME)
+           .insert(item)
+     }
 }

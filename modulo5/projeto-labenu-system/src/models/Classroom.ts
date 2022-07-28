@@ -18,7 +18,6 @@ export class Classroom{
     constructor(
         private id:string,
         private name: string,
-        private students: string[],
         private module: MODULE
     ){}
 
@@ -30,11 +29,20 @@ export class Classroom{
         return this.name
     }
 
-    public getStudents(){
-        return this.students
-    }
-
     public getModule(){
         return this.module
+    }
+
+    public setId(newId: string) {
+        this.id = newId
+    }
+
+    public setName(newName: string) {
+        this.name = newName
+    }
+
+
+    public setModule(newModule: MODULE) {
+        this.module = newModule
     }
 }

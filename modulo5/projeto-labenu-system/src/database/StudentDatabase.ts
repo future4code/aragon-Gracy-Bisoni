@@ -1,4 +1,4 @@
-import { Student } from "../models/Student";
+import { IStudentDB, Student } from "../models/Student";
 import { BaseDatabase } from "./BaseDatabase";
 
 export class StudentDatabase extends BaseDatabase{
@@ -18,5 +18,9 @@ export class StudentDatabase extends BaseDatabase{
         .where("name", "LIKE", `%${name}%`)
 
         return result
+    }
+
+    public async create(student:Student){
+        return super.create(student)
     }
 }

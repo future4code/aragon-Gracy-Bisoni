@@ -10,13 +10,12 @@ export const getStudents = async (req: Request, res: Response) => {
         if(search){
             const studentDatabase = new StudentDatabase()
             const result = await studentDatabase.getStudentByname(search)
-
+            res.status(200).send({ students: result })
+        } else{
+            const studentDatabase = new StudentDatabase()
+            const result = await studentDatabase.getAll()
             res.status(200).send({ students: result })
         }
-        const studentDatabase = new StudentDatabase()
-        const result = await studentDatabase.getAll()
-        
-        res.status(200).send({ students: result })
     } catch (error) {
         res.status(errorCode).send({ message: error.message })
     }

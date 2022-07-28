@@ -4,6 +4,8 @@ import dotenv from 'dotenv'
 import { getStudents } from './endpoints/getStudents'
 import { getClassrooms } from './endpoints/getClassrooms'
 import { getActiveClasses } from './endpoints/getActiveClasses'
+import { createClass } from './endpoints/createClass'
+import { insertStudent } from './endpoints/insertStudent'
 
 dotenv.config()
 const app = express()
@@ -11,7 +13,8 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-// Endpoint 1 - Create Class
+// Endpoint 1 - Create Class -> falta inserir os students
+app.post('/classrooms', createClass)
 
 // Endpoint extra - GET (all)CLASSROOMS
 app.get('/classrooms', getClassrooms)
@@ -20,8 +23,10 @@ app.get('/classrooms', getClassrooms)
 app.get('/classrooms/active', getActiveClasses)
 
 // Endpoint 3 - Change class module - PUT
+app.put('/classrooms/:classroomId',)
 
 // Endpoint 4 - Insert Student
+app.post('/students', insertStudent)
 
 // Endpoint 5 - GET (all)STUDENTS -> or add query "search" and name
 app.get('/students', getStudents)
