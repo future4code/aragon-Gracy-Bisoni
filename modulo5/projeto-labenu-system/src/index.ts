@@ -6,6 +6,7 @@ import { getClassrooms } from './endpoints/getClassrooms'
 import { getActiveClasses } from './endpoints/getActiveClasses'
 import { createClass } from './endpoints/createClass'
 import { insertStudent } from './endpoints/insertStudent'
+import { updateClassModule } from './endpoints/updateClassModule'
 
 dotenv.config()
 const app = express()
@@ -13,7 +14,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-// Endpoint 1 - Create Class -> falta inserir os students
+// Endpoint 1 - Create Class
 app.post('/classrooms', createClass)
 
 // Endpoint extra - GET (all)CLASSROOMS
@@ -23,7 +24,7 @@ app.get('/classrooms', getClassrooms)
 app.get('/classrooms/active', getActiveClasses)
 
 // Endpoint 3 - Change class module - PUT
-app.put('/classrooms/:classroomId',)
+app.put('/classrooms/:id', updateClassModule)
 
 // Endpoint 4 - Insert Student
 app.post('/students', insertStudent)

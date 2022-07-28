@@ -41,7 +41,6 @@ export class Classroom{
         this.name = newName
     }
 
-
     public setModule(newModule: MODULE) {
         this.module = newModule
     }
