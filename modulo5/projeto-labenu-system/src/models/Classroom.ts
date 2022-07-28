@@ -21,4 +21,20 @@ export class Classroom{
         private students: string[],
         private module: MODULE
     ){}
+
+    public getId(){
+        return this.id
+    }
+
+    public getName(){
+        return this.name
+    }
+
+    public getStudents(){
+        return this.students
+    }
+
+    public getModule(){
+        return this.module
+    }
 }

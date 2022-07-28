@@ -3,7 +3,7 @@ export interface IStudentDB{
         name: string,
         email: string,
         birthdate: Date,
-        classroomId: string,
+        classroom_id: string | null,
 }
 
 export interface IHobbyDB{
@@ -22,7 +22,31 @@ export class Student{
         private name: string,
         private email: string,
         private birthdate: Date,
-        private classroomId: string,
+        private classroom_id: string | null,
         private hobbies: string[]
     ){}
+
+    public getId(){
+        return this.id
+    }
+
+    public getName(){
+        return this.name
+    }
+
+    public getEmail(){
+        return this.email
+    }
+
+    public getBirthdate(){
+        return this.birthdate
+    }
+
+    public getClassroomId(){
+        return this.classroom_id
+    }
+
+    public getHobbies(){
+        return this.hobbies
+    }
 }

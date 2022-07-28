@@ -15,4 +15,13 @@ export abstract class BaseDatabase {
             multipleStatements: true
         }
     })
+
+    protected abstract TABLE_NAME:string
+    protected async getAll() {
+        const result = await BaseDatabase
+           .connection(this.TABLE_NAME)
+           .select()
+  
+        return result
+     }
 }

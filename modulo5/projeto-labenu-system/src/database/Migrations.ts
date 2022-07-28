@@ -1,9 +1,10 @@
 import { BaseDatabase } from "./BaseDatabase";
 import { ClassroomDatabase } from "./ClassroomDatabase";
 import { classrooms, hobbies, students, studentsHobbies } from "./data";
+import { HobbyDatabase } from "./HobbyDatabase";
 import { StudentDatabase } from "./StudentDatabase";
 
-class Migrations extends BaseDatabase{
+class Migrations extends BaseDatabase {
     protected TABLE_NAME = ""
 
     public async execute() {
@@ -13,7 +14,7 @@ class Migrations extends BaseDatabase{
             await this.insertData()
             console.log("Tables populated successfully")
         } catch (err) {
-            console.log(err.sql || err.message)
+            console.log(err.message)
         } finally {
             console.log("Ending connection...")
             BaseDatabase.connection.destroy()
@@ -21,9 +22,13 @@ class Migrations extends BaseDatabase{
         }
     }
 
-    private async createTables(){
+    private async createTables() {
         await BaseDatabase.connection.raw(`
-        DROP TABLE IF EXISTS ${ClassroomDatabase.TABLE_CLASSROOMS}, ${StudentDatabase.TABLE_STUDENTS}, ${StudentDatabase.TABLE_HOBBIES}, ${StudentDatabase.STUDENTS_HOBBIES} ;
+        DROP TABLE IF EXISTS 
+        ${ClassroomDatabase.TABLE_CLASSROOMS}, 
+        ${StudentDatabase.TABLE_STUDENTS}, 
+        ${HobbyDatabase.TABLE_HOBBIES}, 
+        ${HobbyDatabase.STUDENTS_HOBBIES};
         
         CREATE TABLE IF NOT EXISTS ${ClassroomDatabase.TABLE_CLASSROOMS}(
             id VARCHAR(255) PRIMARY KEY,
@@ -40,36 +45,36 @@ class Migrations extends BaseDatabase{
             FOREIGN KEY (classroom_id) REFERENCES ${ClassroomDatabase.TABLE_CLASSROOMS}(id)
         );
         
-        CREATE TABLE IF NOT EXISTS ${StudentDatabase.TABLE_HOBBIES}(
+        CREATE TABLE IF NOT EXISTS ${HobbyDatabase.TABLE_HOBBIES}(
            id VARCHAR(255) PRIMARY KEY,
            title VARCHAR(255) NOT NULL UNIQUE
         );
         
-        CREATE TABLE IF NOT EXISTS ${StudentDatabase.STUDENTS_HOBBIES}(
+        CREATE TABLE IF NOT EXISTS ${HobbyDatabase.STUDENTS_HOBBIES}(
             student_id VARCHAR(255) NOT NULL,
-            hobbie_id VARCHAR(255) NOT NULL,
+            hobby_id VARCHAR(255) NOT NULL,
             FOREIGN KEY (student_id) REFERENCES ${StudentDatabase.TABLE_STUDENTS}(id),
-            FOREIGN KEY (hobbie_id) REFERENCES ${StudentDatabase.TABLE_HOBBIES}(id)
+            FOREIGN KEY (hobby_id) REFERENCES ${HobbyDatabase.TABLE_HOBBIES}(id)
         );
             `)
     }
 
-    private async insertData(){
+    private async insertData() {
         await BaseDatabase
-        .connection(StudentDatabase.TABLE_STUDENTS)
-        .insert(students)
+            .connection(ClassroomDatabase.TABLE_CLASSROOMS)
+            .insert(classrooms)
+        
+        await BaseDatabase
+            .connection(StudentDatabase.TABLE_STUDENTS)
+            .insert(students)
 
         await BaseDatabase
-        .connection(ClassroomDatabase.TABLE_CLASSROOMS)
-        .insert(classrooms)
+            .connection(HobbyDatabase.TABLE_HOBBIES)
+            .insert(hobbies)
 
         await BaseDatabase
-        .connection(StudentDatabase.TABLE_HOBBIES)
-        .insert(hobbies)
-
-        await BaseDatabase
-        .connection(StudentDatabase.STUDENTS_HOBBIES)
-        .insert(studentsHobbies)
+            .connection(HobbyDatabase.STUDENTS_HOBBIES)
+            .insert(studentsHobbies)
     }
 }
 

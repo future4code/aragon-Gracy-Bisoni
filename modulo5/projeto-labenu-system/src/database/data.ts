@@ -25,21 +25,21 @@ export const students: IStudentDB[]= [
         name: "Belle",
         email: "teste@belle.com",
         birthdate: new Date("1997-10-20"),
-        classroomId: "102"
+        classroom_id: "101"
     },
     {
         id:"202",
         name: "Leona",
         email: "teste@leona.com",
         birthdate: new Date("1997-09-08"),
-        classroomId: "103"
+        classroom_id: "103"
     },
     {
         id:"203",
         name: "Nicoly",
         email: "teste@nicoly.com",
         birthdate: new Date("1999-06-10"),
-        classroomId: "102"
+        classroom_id: "102"
     }
 ]
 
@@ -60,7 +60,7 @@ export const hobbies:IHobbyDB[]= [
 
 export const studentsHobbies:IStudentsHobbiesDB[] = [
     {
-        student_id: "101",
+        student_id: "201",
         hobby_id: "301"
     }
 ]
