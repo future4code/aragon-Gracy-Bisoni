@@ -7,6 +7,7 @@ import { getActiveClasses } from './endpoints/getActiveClasses'
 import { createClass } from './endpoints/createClass'
 import { insertStudent } from './endpoints/insertStudent'
 import { updateClassModule } from './endpoints/updateClassModule'
+import { updateStudentClass } from './endpoints/updateStudentClass'
 
 dotenv.config()
 const app = express()
@@ -32,7 +33,8 @@ app.post('/students', insertStudent)
 // Endpoint 5 - GET (all)STUDENTS -> or add query "search" and name
 app.get('/students', getStudents)
 
-// Endpoint 6 - Edit student - PUT
+// Endpoint 6 - Update student - PUT
+app.put('/students/:id', updateStudentClass)
 
 // Endpoint 7 - Get class students
 

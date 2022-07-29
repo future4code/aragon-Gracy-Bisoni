@@ -23,4 +23,22 @@ export class StudentDatabase extends BaseDatabase{
     public async create(student:Student){
         return super.create(student)
     }
+
+    public async findById(id:string){
+        const findClass = await BaseDatabase
+        .connection(StudentDatabase.TABLE_STUDENTS)
+        .where({id})
+        .select()
+
+        return findClass
+    }
+
+    public async updateClass(id:string, newClassroom:string){
+        const result = await BaseDatabase
+        .connection(StudentDatabase.TABLE_STUDENTS)
+        .update({
+            classroom_id: newClassroom
+        })
+        .where({id})
+    }
 }
