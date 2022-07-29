@@ -11,14 +11,14 @@ export const getClassStudents = async(req:Request, res:Response)=> {
         const searchClass = await classroomDatabase.findById(classroomId)
 
         if(!searchClass[0]){
-            errorCode = 422
+            errorCode = 404
             throw new Error("Class not found");
         }
 
         const result = await classroomDatabase.classroomStudents(classroomId)
 
         res.status(200).send({
-            message:"success",
+            message: "success",
             result: result
         })
 

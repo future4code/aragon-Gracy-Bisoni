@@ -13,7 +13,7 @@ export const updateStudentClass = async(req:Request, res:Response) => {
         const searchStudent = await studentDatabase.findById(id)
 
         if(!searchStudent[0]){
-            errorCode = 422
+            errorCode = 404
             throw new Error("Student not found");
         }
 
