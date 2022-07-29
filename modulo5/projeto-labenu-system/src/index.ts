@@ -1,14 +1,14 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import { getStudents } from './endpoints/getStudents'
-import { getClassrooms } from './endpoints/getClassrooms'
-import { getActiveClasses } from './endpoints/getActiveClasses'
-import { createClass } from './endpoints/createClass'
-import { insertStudent } from './endpoints/insertStudent'
-import { updateClassModule } from './endpoints/updateClassModule'
-import { updateStudentClass } from './endpoints/updateStudentClass'
-import { getClassStudents } from './endpoints/getClassStudents'
+import { getClassrooms } from './endpoints/Classrooms/getClassrooms'
+import { getActiveClasses } from './endpoints/Classrooms/getActiveClasses'
+import { createClass } from './endpoints/Classrooms/createClass'
+import { updateClassModule } from './endpoints/Classrooms/updateClassModule'
+import { updateStudentClass } from './endpoints/Students/updateStudentClass'
+import { getClassStudents } from './endpoints/Classrooms/getClassStudents'
+import { insertStudent } from './endpoints/Students/insertStudent'
+import { getStudents } from './endpoints/Students/getStudents'
 
 dotenv.config()
 const app = express()

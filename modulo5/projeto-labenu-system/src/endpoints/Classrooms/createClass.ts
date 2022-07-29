@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { ClassroomDatabase } from "../database/ClassroomDatabase";
-import { Classroom, IClassroomDB } from "../models/Classroom";
+import { ClassroomDatabase } from "../../database/ClassroomDatabase";
+import { Classroom, IClassroomDB } from "../../models/Classroom";
 
 export const createClass = async (req:Request, res:Response) => {
     let errorCode = 400

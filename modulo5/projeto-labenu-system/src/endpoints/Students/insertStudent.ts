@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { StudentDatabase } from "../database/StudentDatabase";
-import { IStudentDB, Student } from "../models/Student";
+import { StudentDatabase } from "../../database/StudentDatabase";
+import { Student } from "../../models/Student";
 
 export const insertStudent = async (req:Request, res:Response) => {
     let errorCode = 400

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { ClassroomDatabase } from "../database/ClassroomDatabase";
-import { StudentDatabase } from "../database/StudentDatabase";
+import { ClassroomDatabase } from "../../database/ClassroomDatabase";
+import { StudentDatabase } from "../../database/StudentDatabase";
 
 export const getClassStudents = async(req:Request, res:Response)=> {
     let errorCode = 400
