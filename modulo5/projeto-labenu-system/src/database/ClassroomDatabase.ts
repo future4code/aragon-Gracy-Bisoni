@@ -1,5 +1,6 @@
 import { Classroom, IClassroomDB, MODULE } from "../models/Classroom";
 import { BaseDatabase } from "./BaseDatabase";
+import { StudentDatabase } from "./StudentDatabase";
 
 export class ClassroomDatabase extends BaseDatabase{
     TABLE_NAME = "Labe_Classrooms";
@@ -37,6 +38,15 @@ export class ClassroomDatabase extends BaseDatabase{
         .where({id})
         .update({module})
 
+    }
+
+    public async classroomStudents(classroom_id:string){
+        const result = await BaseDatabase
+        .connection(StudentDatabase.TABLE_STUDENTS)
+        .select("id","name","email")
+        .where({ classroom_id })
+
+        return result
     }
 
 }

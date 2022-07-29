@@ -14,7 +14,7 @@ export const updateStudentClass = async(req:Request, res:Response) => {
 
         if(!searchStudent[0]){
             errorCode = 422
-            throw new Error("Class not found");
+            throw new Error("Student not found");
         }
 
         // DELETE E PUT N DÁ RETORNO NO SQL!

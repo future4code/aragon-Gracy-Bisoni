@@ -8,6 +8,7 @@ import { createClass } from './endpoints/createClass'
 import { insertStudent } from './endpoints/insertStudent'
 import { updateClassModule } from './endpoints/updateClassModule'
 import { updateStudentClass } from './endpoints/updateStudentClass'
+import { getClassStudents } from './endpoints/getClassStudents'
 
 dotenv.config()
 const app = express()
@@ -37,7 +38,7 @@ app.get('/students', getStudents)
 app.put('/students/:id', updateStudentClass)
 
 // Endpoint 7 - Get class students
-
+app.get('/classrooms/:classroomId/students', getClassStudents)
 
 
 app.listen(process.env.PORT || 3003, () => {
