@@ -8,12 +8,30 @@ export class UserController {
     public signup = async (req: Request, res: Response) => {
         let errorCode = 400
         try {
-            const nickname = req.body.nickname
+            const nickname = req.body.nickname as string
+            const nickSplit = nickname.split("")
             const email = req.body.email
-            const password = req.body.password
+            const password = req.body.password as string
+            const passSplit = password.split("")
 
             if (!nickname || !email || !password) {
-                throw new Error("Parâmetros faltando")
+                errorCode = 422
+                throw new Error("Missing params")
+            }
+
+            if (typeof nickname !== "string" || typeof email !== "string"  || typeof password !== "string") {
+                errorCode = 422
+                throw new Error("Nickname, email and password need to be string type")
+            }
+
+            if(passSplit.length < 6 || nickSplit.length < 3){
+                errorCode = 422
+                throw new Error("Password needs at least 6 characters, and nickname at least 3."); 
+            }
+
+            if(!email.includes("@")){
+                errorCode = 422
+                throw new Error("Insert a valid email");
             }
 
             const idGenerator = new IdGenerator()
@@ -212,7 +230,7 @@ export class UserController {
                 errorCode = 404
                 throw new Error("User not found");
             }
-            
+
             const result = await userDatabase.deleteProfile(id)
             
             res.status(200).send({message:"User successfully deleted! :D"})
