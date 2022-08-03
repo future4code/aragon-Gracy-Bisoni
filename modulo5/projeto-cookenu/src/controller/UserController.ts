@@ -226,4 +226,41 @@ export class UserController {
             res.status(errorCode).send({ message: error.message })
         }
     }
+
+    public deleteUser = async(req: Request, res: Response) => {
+        let errorCode = 400
+        try {
+            const token = req.headers.authorization
+            const id = req.params.id
+            const authenticator = new Authenticator()
+            const payload = authenticator.getTokenPayload(token)
+
+            if(!payload){
+                errorCode = 401
+                throw new Error("Missing or invalid token");                
+            }
+
+            if(payload.role !== USER_ROLES.ADMIN){
+                errorCode = 403
+                throw new Error("Forbidden access for normal users");
+            }
+
+            const userDatabase = new UserDatabase()
+            
+            if(id === payload.id){
+                throw new Error("You can't delete your own account");
+            }
+
+            await userDatabase.deleteUser(id)
+
+            res.status(200).send({
+                message: "User deleted successfully"
+            })
+
+        } catch (error) {
+            res.status(errorCode).send({
+                message: error.message
+            })
+        }
+    }
 }
