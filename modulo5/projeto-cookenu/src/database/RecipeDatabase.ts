@@ -12,6 +12,16 @@ export class RecipeDatabase extends BaseDatabase {
         return recipesDB
     }
 
+    public searchRecipes = async(search: string) => {
+        const result:IRecipeDB[] = await BaseDatabase
+            .connection(RecipeDatabase.TABLE_RECIPES)
+            .select()
+            .where("title", "LIKE", `%${search}%`)
+            .orWhere("description", "LIKE", `%${search}%`)
+
+        return result
+    }
+
     public createRecipe = async (recipe: Recipe) => {
         const result: IRecipeDB = {
             id: recipe.getId(),

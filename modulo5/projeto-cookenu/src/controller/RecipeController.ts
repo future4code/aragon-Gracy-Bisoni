@@ -5,10 +5,11 @@ import { Authenticator } from "../services/Authenticator";
 import { IdGenerator } from "../services/IdGenerator";
 
 export class RecipeController {
-    public getAllRecipes = async (req: Request, res: Response) => {
+    public getRecipes = async (req: Request, res: Response) => {
         let errorCode = 400
         try {
             const token = req.headers.authorization
+            const search = req.query.search as string
 
             if (!token) {
                 errorCode = 401
@@ -24,8 +25,15 @@ export class RecipeController {
             }
 
             const recipeDatabase = new RecipeDatabase()
-            const recipesDB = await recipeDatabase.getAllRecipes()
 
+            if(search){
+                const recipesDB = await recipeDatabase.searchRecipes(search)
+                const recipes = recipesDB
+
+                res.status(200).send({ recipes })
+            } else {
+            
+            const recipesDB = await recipeDatabase.getAllRecipes()
             const recipes = recipesDB.map((recipeDB) => {
                 return new Recipe(
                     recipeDB.id,
@@ -38,6 +46,7 @@ export class RecipeController {
             })
 
             res.status(200).send({ recipes })
+        }
         } catch (error) {
             res.status(errorCode).send({ message: error.message })
         }

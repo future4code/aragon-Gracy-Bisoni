@@ -5,5 +5,5 @@ export const recipeRouter = Router()
 
 const recipeController = new RecipeController()
 
-recipeRouter.get("/", recipeController.getAllRecipes)
+recipeRouter.get("/", recipeController.getRecipes)
 recipeRouter.post('/create', recipeController.createRecipe)

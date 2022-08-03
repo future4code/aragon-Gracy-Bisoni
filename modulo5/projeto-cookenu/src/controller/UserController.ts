@@ -155,7 +155,7 @@ export class UserController {
         }
     }
 
-    public getAllUsers = async (req: Request, res: Response) => {
+    public getUsers = async (req: Request, res: Response) => {
         let errorCode = 400
         try {
             const token = req.headers.authorization
@@ -199,7 +199,7 @@ export class UserController {
             res.status(200).send({ users: result })
         } else{
 
-        const usersDB = await userDatabase.getUsers()
+        const usersDB = await userDatabase.getAllUsers()
 
         const users = usersDB.map((userDB) => {
             return new User(
