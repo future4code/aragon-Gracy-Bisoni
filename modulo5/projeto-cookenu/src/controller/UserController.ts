@@ -246,6 +246,12 @@ export class UserController {
             }
 
             const userDatabase = new UserDatabase()
+            const searchUser = await userDatabase.findById(id)
+
+            if(!searchUser[0]){
+                errorCode = 404
+                throw new Error("User not found");
+            }
             
             if(id === payload.id){
                 throw new Error("You can't delete your own account");
