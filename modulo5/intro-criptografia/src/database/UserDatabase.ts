@@ -1,4 +1,4 @@
-import { EDITABLE, IUserDB, User } from "../models/User"
+import { IUserDB, User } from "../models/User"
 import { BaseDatabase } from "./BaseDatabase"
 
 export class UserDatabase extends BaseDatabase {
@@ -9,7 +9,8 @@ export class UserDatabase extends BaseDatabase {
             id: user.getId(),
             nickname: user.getNickname(),
             email: user.getEmail(),
-            password: user.getPassword()
+            password: user.getPassword(),
+            role: user.getRole()
         }
 
         await BaseDatabase

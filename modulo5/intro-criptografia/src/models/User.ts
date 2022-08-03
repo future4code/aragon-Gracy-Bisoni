@@ -1,14 +1,14 @@
+export enum USER_ROLES{
+   NORMAL = 'NORMAL',
+   ADMIN = 'ADMIN' 
+}
+
 export interface IUserDB {
     id: string,
     nickname: string,
     email: string,
-    password: string
-}
-
-export enum EDITABLE{
-    NICKNAME = "nickname",
-    EMAIL = "email",
-    PASSWORD = "password"
+    password: string,
+    role: USER_ROLES
 }
 
 export class User {
@@ -16,7 +16,8 @@ export class User {
         private id: string,
         private nickname: string,
         private email: string,
-        private password: string
+        private password: string,
+        private role: USER_ROLES
     ) {}
 
     public getId = () => {
@@ -35,6 +36,10 @@ export class User {
         return this.password
     }
 
+    public getRole = () => {
+        return this.role
+    }
+
     public setId = (newId: string) => {
         this.id = newId
     }
@@ -49,5 +54,9 @@ export class User {
 
     public setPassword = (newPassword: string) => {
         this.password = newPassword
+    }
+
+    public setRole = (newRole: USER_ROLES) => {
+        this.role = newRole
     }
 }

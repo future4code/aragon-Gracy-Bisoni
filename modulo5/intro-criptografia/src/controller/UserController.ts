@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { UserDatabase } from "../database/UserDatabase";
-import { EDITABLE, User } from "../models/User";
+import { User, USER_ROLES } from "../models/User";
 import { Authenticator, ITokenPayload } from "../services/Authenticator";
+import { HashManager } from "../services/HashManager";
 import { IdGenerator } from "../services/IdGenerator";
 
 export class UserController {
@@ -37,18 +38,23 @@ export class UserController {
             const idGenerator = new IdGenerator()
             const id = idGenerator.generate()
 
+            const hashManager = new HashManager()
+            const hashPassword = await hashManager.hash(password)
+
             const user = new User(
                 id,
                 nickname,
                 email,
-                password
+                hashPassword,
+                USER_ROLES.NORMAL
             )
 
             const userDatabase = new UserDatabase()
             await userDatabase.createUser(user)
 
             const payload: ITokenPayload = {
-                id: user.getId()
+                id: user.getId(),
+                role: user.getRole()
             }
 
             const authenticator = new Authenticator()
@@ -87,21 +93,31 @@ export class UserController {
                 errorCode = 401
                 throw new Error("Email não foi cadastrado")
             }
-
+            
             const user = new User(
                 userDB.id,
                 userDB.nickname,
                 userDB.email,
-                userDB.password
+                userDB.password,
+                userDB.role
             )
 
-            if (user.getPassword() !== password) {
+            const hashManager = new HashManager()
+
+            const isPasswordCorrect = await hashManager.compare(
+                password,
+                user.getPassword()
+            )
+
+            if (!isPasswordCorrect) {
                 errorCode = 401
                 throw new Error("Senha inválida")
             }
 
+
             const payload: ITokenPayload = {
-                id: user.getId()
+                id: user.getId(),
+                role: user.getRole()
             }
 
             const authenticator = new Authenticator()
@@ -153,7 +169,7 @@ export class UserController {
                     const result = {
                         id: user.id,
                         nickname: user.nickname,
-                        email: user.email
+                        email: user.email,
                     }
                     return result
                 })
@@ -218,9 +234,9 @@ export class UserController {
                 throw new Error("Token faltando ou inválido")
             }
 
-            if(id === selfId){
-                errorCode = 422
-                throw new Error("Error! Can't delete yourself");
+            if (payload.role !== USER_ROLES.ADMIN) {
+                errorCode = 403
+                throw new Error("Somente admins podem acessar esse endpoint")
             }
 
             const userDatabase = new UserDatabase()
@@ -229,6 +245,11 @@ export class UserController {
             if (!searchUser[0]) {
                 errorCode = 404
                 throw new Error("User not found");
+            }
+
+            if(id === selfId){
+                errorCode = 422
+                throw new Error("Error! Can't delete yourself");
             }
 
             const result = await userDatabase.deleteProfile(id)
