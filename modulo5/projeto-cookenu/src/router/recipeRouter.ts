@@ -5,5 +5,7 @@ export const recipeRouter = Router()
 
 const recipeController = new RecipeController()
 
+// FAZER ORDENAÇÃO E PAGINAÇÃO
 recipeRouter.get("/", recipeController.getRecipes)
+// VALIDAÇÕES DE TIPO e NÚMERO DE CARACTERES
 recipeRouter.post('/create', recipeController.createRecipe)

@@ -7,5 +7,6 @@ const userController = new UserController()
 
 userRouter.post("/signup", userController.signup)
 userRouter.post("/login", userController.login)
+// FAZER ORDENAÇÃO E PAGINAÇÃO
 userRouter.get("/", userController.getUsers)
 userRouter.delete('/:id', userController.deleteUser)

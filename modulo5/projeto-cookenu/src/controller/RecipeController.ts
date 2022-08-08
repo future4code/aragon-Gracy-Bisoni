@@ -61,7 +61,7 @@ export class RecipeController {
 
             if (!token) {
                 errorCode = 401
-                throw new Error("Token faltando")
+                throw new Error("Missing token")
             }
 
             const authenticator = new Authenticator()
@@ -69,7 +69,7 @@ export class RecipeController {
 
             if (!payload) {
                 errorCode = 401
-                throw new Error("Token inválido")
+                throw new Error("Invalid token")
             }
 
             const idGenerator = new IdGenerator()
