@@ -9,3 +9,5 @@ const recipeController = new RecipeController()
 recipeRouter.get("/", recipeController.getRecipes)
 // VALIDAÇÕES DE TIPO e NÚMERO DE CARACTERES
 recipeRouter.post('/create', recipeController.createRecipe)
+
+recipeRouter.put('/:id', recipeController.editRecipe)
