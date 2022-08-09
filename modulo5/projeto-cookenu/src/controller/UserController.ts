@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { RecipeDatabase } from "../database/RecipeDatabase";
 import { UserDatabase } from "../database/UserDatabase";
 import { User, USER_ROLES } from "../models/User";
 import { Authenticator, ITokenPayload } from "../services/Authenticator";
@@ -257,7 +258,18 @@ export class UserController {
                 throw new Error("You can't delete your own account");
             }
 
+            const userToDelete = new User(
+                searchUser[0].id,
+                searchUser[0].nickname,
+                searchUser[0].email,
+                searchUser[0].password,
+                searchUser[0].role
+            )
+
+            const recipeDatabase = new RecipeDatabase()
+            await recipeDatabase.deleteRecipesFromUser(userToDelete.getId())
             await userDatabase.deleteUser(id)
+
 
             res.status(200).send({
                 message: "User deleted successfully"
