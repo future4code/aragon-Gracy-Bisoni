@@ -31,4 +31,22 @@ export class UserController {
         }
     }
 
+    public getUsers = async (req: Request, res: Response) => {
+        try {
+            const userBusiness = new UserBusiness()
+            const response = await userBusiness.getUsers({
+                token: req.headers.authorization,
+                search: req.query.search,
+                sort: req.query.sort,
+                limit: req.query.limit,
+                page: req.query.page,
+            })
+
+
+            res.status(200).send(response)
+        } catch (error) {
+            res.status(400).send({ message: error.message })
+        }
+    }
+
 }

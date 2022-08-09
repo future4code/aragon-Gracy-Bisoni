@@ -26,4 +26,21 @@ export class UserDatabase extends BaseDatabase {
         
         return result[0]
     }
+
+    public getUsers = async (
+        search: string,
+        sort: string,
+        limit: number,
+        offset: number
+    ) => {
+        const userDB: IUserDB[] = await BaseDatabase
+            .connection(UserDatabase.TABLE_USERS)
+            .select()
+            .where(`name`, "LIKE", `%${search}%`)
+            .orWhere(`email`, "LIKE", `%${search}%`)
+            .limit(limit)
+            .offset(offset)
+        
+        return userDB
+    }
 }

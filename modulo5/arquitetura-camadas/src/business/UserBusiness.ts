@@ -137,4 +137,47 @@ export class UserBusiness {
 
         return response
     }
+
+    public getUsers = async (input: any) => {
+        const token = input.token
+        const search = input.search || ""
+        const sort = input.sort || "ASC"
+        const limit = Number(input.limit) || 10
+        const page = Number(input.page) || 1
+        const offset = limit * (page - 1)
+
+        if (!token) {
+            throw new Error("Token faltando")
+        }
+
+        const authenticator = new Authenticator()
+        const payload = authenticator.getTokenPayload(token)
+
+        if (!payload) {
+            throw new Error("Token inválido")
+        }
+
+        const userDatabase = new UserDatabase()
+        const usersDB = await userDatabase.getUsers(
+            search,
+            sort,
+            limit,
+            offset
+        )
+
+        const users = usersDB.map((userDB:any) => {
+            return({
+                id: userDB.id,
+                name: userDB.name,
+                email: userDB.email
+            }
+            )
+        })
+
+        const response = {
+            users
+        }
+
+        return response
+    }
 }
