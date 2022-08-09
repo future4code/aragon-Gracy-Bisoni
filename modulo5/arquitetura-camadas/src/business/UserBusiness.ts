@@ -55,6 +55,11 @@ export class UserBusiness {
         )
 
         const userDatabase = new UserDatabase()
+        const userDB = await userDatabase.findByEmail(email)
+        if (userDB) {
+            throw new Error("E-mail already in use")
+        }
+
         await userDatabase.createUser(user)
 
         const payload: ITokenPayload = {
