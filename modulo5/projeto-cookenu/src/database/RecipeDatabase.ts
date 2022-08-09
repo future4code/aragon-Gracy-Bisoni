@@ -62,4 +62,11 @@ export class RecipeDatabase extends BaseDatabase {
             .where({ id: recipeDB.id })
     }
 
+    public deleteRecipeById = async (id: string) => {
+        await BaseDatabase
+            .connection(RecipeDatabase.TABLE_RECIPES)
+            .delete()
+            .where({ id })
+    }
+
 }

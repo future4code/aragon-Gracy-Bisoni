@@ -176,4 +176,46 @@ export class RecipeController {
         }
     }
 
+    public deleteRecipe = async (req: Request, res: Response) => {
+        let errorCode = 400
+        try {
+            const token = req.headers.authorization
+            const id = req.params.id
+
+            if(!token){
+                errorCode = 401
+                throw new Error("Missing token");
+            }
+
+            const authenticator = new Authenticator()
+            const payload = authenticator.getTokenPayload(token)
+
+            if(!payload){
+                errorCode = 401
+                throw new Error("Invalid token");
+            }
+
+            const recipeDatabase = new RecipeDatabase()
+            const recipeDB = await recipeDatabase.findById(id)
+            
+            if (!recipeDB){
+                errorCode = 404
+                throw new Error("Recipe not found");
+            }
+
+            if(payload.role === USER_ROLES.NORMAL){
+                if(payload.id !== recipeDB.creator_id){
+                    errorCode = 403
+                    throw new Error("Normal users can only modify their own recipes");
+                }
+            }
+
+            await recipeDatabase.deleteRecipeById(id)
+
+            res.status(200).send("Recipe deleted successfully!")
+        } catch (error) {
+            res.status(errorCode).send(error.message)
+        }
+    }
+
 }

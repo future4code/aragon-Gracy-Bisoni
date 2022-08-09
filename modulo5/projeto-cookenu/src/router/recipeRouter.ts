@@ -11,3 +11,4 @@ recipeRouter.get("/", recipeController.getRecipes)
 recipeRouter.post('/create', recipeController.createRecipe)
 
 recipeRouter.put('/:id', recipeController.editRecipe)
+recipeRouter.delete('/:id', recipeController.deleteRecipe)
