@@ -5,6 +5,8 @@ import { HashManager } from "../services/HashManager"
 import { IdGenerator } from "../services/IdGenerator"
 
 export class UserBusiness {
+
+    // faltando verificação de e-mail já existente ou não no BD
     public signup = async (input:any)=> {
         const name = input.name
         const email = input.email
@@ -65,6 +67,71 @@ export class UserBusiness {
 
         const response = {
             message: "User created successfully!",
+            token
+        }
+
+        return response
+    }
+
+    public login = async (input: any) => {
+        const email = input.email
+        const password = input.password
+
+        if (!email || !password) {
+            throw new Error("Need to insert e-mail and password")
+        }
+
+        if (typeof email !== "string") {
+            throw new Error("E-mail must be string type")
+        }
+
+        if (typeof password !== "string") {
+            throw new Error("Password must be string type")
+        }
+
+        if (password.length < 6) {
+            throw new Error("Password must have at least 6 characters")
+        }
+
+        if (!email.includes("@") || !email.includes(".com")) {
+            throw new Error("Insert a valid e-mail")
+        }
+
+        const userDatabase = new UserDatabase()
+        const userDB = await userDatabase.findByEmail(email)
+
+        if (!userDB) {
+            throw new Error("E-mail not found")
+        }
+
+        const user = new User(
+            userDB.id,
+            userDB.name,
+            userDB.email,
+            userDB.password,
+            userDB.role
+        )
+
+        const hashManager = new HashManager()
+        const isPasswordCorrect = await hashManager.compare(
+            password,
+            user.getPassword()
+        )
+
+        if (!isPasswordCorrect) {
+            throw new Error("Invalid password")
+        }
+
+        const payload: ITokenPayload = {
+            id: user.getId(),
+            role: user.getRole()
+        }
+
+        const authenticator = new Authenticator()
+        const token = authenticator.generateToken(payload)
+
+        const response = {
+            message: "Logged in!",
             token
         }
 
