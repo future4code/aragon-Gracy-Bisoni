@@ -43,4 +43,20 @@ export class UserDatabase extends BaseDatabase {
         
         return userDB
     }
+
+    public findById = async (id: string) => {
+        const result: IUserDB[] = await BaseDatabase
+            .connection(UserDatabase.TABLE_USERS)
+            .select()
+            .where({ id })
+        
+        return result[0]
+    }
+
+    public deleteUserById = async (id: string) => {
+        await BaseDatabase
+            .connection(UserDatabase.TABLE_USERS)
+            .delete()
+            .where({ id })
+    }
 }

@@ -180,4 +180,40 @@ export class UserBusiness {
 
         return response
     }
+
+    public deleteUser = async (input: any) => {
+        const token = input.token
+        const idToDelete = input.idToDelete
+
+        if (!token) {
+            throw new Error("Missing token")
+        }
+
+        const authenticator = new Authenticator()
+        const payload = authenticator.getTokenPayload(token)
+
+        if (!payload) {
+            throw new Error("Invalid token")
+        }
+
+        if (payload.role !== USER_ROLES.ADMIN) {
+            throw new Error("Only admins can delete users")
+        }
+
+        const userDatabase = new UserDatabase()
+        const userDB = await userDatabase.findById(idToDelete)
+
+        if (!userDB) {
+            throw new Error("User not found")
+        }
+
+
+        await userDatabase.deleteUserById(idToDelete)
+
+        const response = {
+            message: "User deleted succesfully!"
+        }
+
+        return response
+    }
 }
