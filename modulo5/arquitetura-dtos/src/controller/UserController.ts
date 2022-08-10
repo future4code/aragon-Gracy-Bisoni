@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { UserBusiness } from "../business/UserBusiness";
-import { IGetUsersInputDTO, ILoginInputDTO, ISignupInputDTO } from "../models/User";
+import { IDeleteUserInputDTO, IGetUsersInputDTO, ILoginInputDTO, ISignupInputDTO } from "../models/User";
 
 export class UserController {
     public signup = async (req: Request, res: Response) => {
@@ -57,11 +57,12 @@ export class UserController {
 
     public deleteUser = async (req: Request, res: Response) => {
         try {
-            const userBusiness = new UserBusiness()
-            const response = await userBusiness.deleteUser({
+            const input: IDeleteUserInputDTO = {
                 token: req.headers.authorization,
                 idToDelete: req.params.id
-            })
+            } 
+            const userBusiness = new UserBusiness()
+            const response = await userBusiness.deleteUser(input)
 
             res.status(200).send(response)
         } catch (error) {

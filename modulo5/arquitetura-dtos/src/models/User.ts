@@ -98,3 +98,8 @@ export interface IGetUsersDBDTO {
     limit: number,
     offset: number
 }
+
+export interface IDeleteUserInputDTO {
+    token: string,
+    idToDelete: string
+}
