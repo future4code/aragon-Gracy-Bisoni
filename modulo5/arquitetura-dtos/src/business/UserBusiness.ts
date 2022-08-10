@@ -1,5 +1,5 @@
 import { UserDatabase } from "../database/UserDatabase"
-import { ILoginInputDTO, ISignupInputDTO, User, USER_ROLES } from "../models/User"
+import { IGetUsersDBDTO, IGetUsersInputDTO, IGetUsersOutputDTO, IGetUsersUser, ILoginInputDTO, ISignupInputDTO, User, USER_ROLES } from "../models/User"
 import { Authenticator, ITokenPayload } from "../services/Authenticator"
 import { HashManager } from "../services/HashManager"
 import { IdGenerator } from "../services/IdGenerator"
@@ -127,7 +127,7 @@ export class UserBusiness {
         return response
     }
 
-    public getUsers = async (input: any) => {
+    public getUsers = async (input: IGetUsersInputDTO) => {
         const token = input.token
         const search = input.search || ""
         const order = input.order || "name"
@@ -143,14 +143,15 @@ export class UserBusiness {
             throw new Error("Token inválido ou faltando")
         }
 
-        const userDatabase = new UserDatabase()
-        const usersDB = await userDatabase.getUsers({
+        const getUsersInputDB: IGetUsersDBDTO = {
             search,
             order,
             sort,
             limit,
             offset
-        })
+        }
+        const userDatabase = new UserDatabase()
+        const usersDB = await userDatabase.getUsers(getUsersInputDB)
 
         const users = usersDB.map(userDB => {
             const user = new User(
@@ -161,7 +162,7 @@ export class UserBusiness {
                 userDB.role
             )
 
-            const userResponse = {
+            const userResponse: IGetUsersUser = {
                 id: user.getId(),
                 name: user.getName(),
                 email: user.getEmail()
@@ -170,7 +171,7 @@ export class UserBusiness {
             return userResponse
         })
 
-        const response = {
+        const response: IGetUsersOutputDTO = {
             users
         }
 
