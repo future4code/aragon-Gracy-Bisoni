@@ -103,3 +103,11 @@ export interface IDeleteUserInputDTO {
     token: string,
     idToDelete: string
 }
+
+export interface IEditUserInputDTO {
+    token: string,
+    idToEdit: string,
+    name: string,
+    email: string,
+    password: string
+}

@@ -1,5 +1,5 @@
 import { UserDatabase } from "../database/UserDatabase"
-import { IDeleteUserInputDTO, IGetUsersDBDTO, IGetUsersInputDTO, IGetUsersOutputDTO, IGetUsersUser, ILoginInputDTO, ISignupInputDTO, User, USER_ROLES } from "../models/User"
+import { IDeleteUserInputDTO, IEditUserInputDTO, IGetUsersDBDTO, IGetUsersInputDTO, IGetUsersOutputDTO, IGetUsersUser, ILoginInputDTO, ISignupInputDTO, User, USER_ROLES } from "../models/User"
 import { Authenticator, ITokenPayload } from "../services/Authenticator"
 import { HashManager } from "../services/HashManager"
 import { IdGenerator } from "../services/IdGenerator"
@@ -211,5 +211,30 @@ export class UserBusiness {
         }
 
         return response
+    }
+
+    public updateUser = async (input: IEditUserInputDTO) => {
+        const {
+            token,
+            idToEdit,
+            email,
+            name,
+            password
+        } = input
+
+        if (!token){
+            throw new Error("Missing token");
+        }
+
+        if(!email && !name && !password){
+            throw new Error("Missing params. Insert name, or e-mail, or password.");  
+        }
+
+        const authenticator = new Authenticator()
+        const payload = authenticator.getTokenPayload(token)
+
+        if(!payload){
+            throw new Error ("")
+        }
     }
 }

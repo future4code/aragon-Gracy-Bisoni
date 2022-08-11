@@ -69,4 +69,8 @@ export class UserController {
             res.status(400).send({ message: error.message })
         }
     }
+
+    public updateUser = async (req: Request, res: Response) => {
+        
+    }
 }
