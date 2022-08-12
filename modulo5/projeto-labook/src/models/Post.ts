@@ -15,6 +15,23 @@ export interface IPostInputDTO {
     token: string
 }
 
+export interface IGetPostsDBDTO {
+    search: string,
+    order: string,
+    sort: string,
+    limit: number,
+    offset: number
+}
+
+export interface IGetPostsInputDTO {
+    token: string,
+    search: string,
+    order: string,
+    sort: string,
+    limit: string,
+    page: string
+}
+
 export class Post {
     constructor(
         private id: string,

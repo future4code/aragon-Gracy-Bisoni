@@ -1,4 +1,5 @@
 import { UserDatabase } from "../database/UserDatabase"
+import { IGetPostsDBDTO, IGetPostsInputDTO } from "../models/Post"
 import { ILoginInputDTO, ISignupInputDTO, User, USER_ROLES } from "../models/User"
 import { Authenticator, ITokenPayload } from "../services/Authenticator"
 import { HashManager } from "../services/HashManager"
