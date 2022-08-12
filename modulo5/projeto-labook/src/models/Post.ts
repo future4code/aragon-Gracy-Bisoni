@@ -10,6 +10,11 @@ export interface ILikeDB {
     user_id: string
 }
 
+export interface IPostInputDTO {
+    content: string,
+    token: string
+}
+
 export class Post {
     constructor(
         private id: string,
