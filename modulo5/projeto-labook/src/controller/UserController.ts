@@ -1,6 +1,6 @@
 import { UserBusiness } from "../business/UserBusiness";
 import { Request, Response } from "express";
-import { ISignupInputDTO } from "../models/User";
+import { ILoginInputDTO, ISignupInputDTO } from "../models/User";
 
 export class UserController {
     constructor(
@@ -23,5 +23,23 @@ export class UserController {
             })
         }
     } 
+
+    public login = async(req:Request, res:Response) => {
+        try {
+
+            const input: ILoginInputDTO = {
+                email: req.body.email,
+                password: req.body.password
+            }
+
+            const response = await this.userBusiness.login(input)
+            
+            res.status(200).send(response)
+        } catch (error) {
+            res.status(400).send({
+                message: error.message
+            })
+        }
+    }
 
 }
