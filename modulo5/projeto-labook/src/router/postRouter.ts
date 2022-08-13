@@ -20,3 +20,4 @@ const postController = new PostController(postBusiness)
 
 postRouter.post('/create', postController.createPost)
 postRouter.get('/', postController.getPosts)
+postRouter.delete('/:id', postController.deletePost)

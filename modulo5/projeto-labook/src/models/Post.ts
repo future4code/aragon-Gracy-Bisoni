@@ -32,6 +32,11 @@ export interface IGetPostsInputDTO {
     page: string
 }
 
+export interface IDeletePostInputDTO{
+    token: string,
+    id: string
+}
+
 export class Post {
     constructor(
         private id: string,

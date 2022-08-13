@@ -1,7 +1,8 @@
 import { throws } from "assert"
 import { PostDatabase } from "../database/PostDatabase"
 import { UserDatabase } from "../database/UserDatabase"
-import { IGetPostsDBDTO, IGetPostsInputDTO, IPostInputDTO, Post } from "../models/Post"
+import { IDeletePostInputDTO, IGetPostsDBDTO, IGetPostsInputDTO, IPostDB, IPostInputDTO, Post } from "../models/Post"
+import { USER_ROLES } from "../models/User"
 import { Authenticator } from "../services/Authenticator"
 import { HashManager } from "../services/HashManager"
 import { IdGenerator } from "../services/IdGenerator"
@@ -104,6 +105,37 @@ export class PostBusiness {
 
         return response
 
+    }
+
+    public async deletePost(input:IDeletePostInputDTO){
+        const token = input.token
+        const id = input.id
+
+        const payload = this.authenticator.getTokenPayload(token)
+
+        if (!payload) {
+            throw new Error("Missing token")
+        }
+
+        const postDB= await this.postDatabase.findById(id)
+
+        if(!postDB){
+            throw new Error("Post not found");
+        }
+
+        if(payload.role === USER_ROLES.NORMAL){
+            if(payload.id !== postDB.user_id){
+                throw new Error("Normal users can only delete their own posts");
+            }
+        }
+
+        await this.postDatabase.deletePostById(id)
+        
+        const response = {
+            message: "Post deleted successfully"
+        }
+
+        return response
     }
 
 }

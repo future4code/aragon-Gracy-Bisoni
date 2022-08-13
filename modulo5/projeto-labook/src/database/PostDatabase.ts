@@ -1,5 +1,6 @@
 import { IGetPostsDBDTO, IPostDB, Post } from "../models/Post"
 import { BaseDatabase } from "./BaseDatabase"
+import { UserDatabase } from "./UserDatabase"
 
 export class PostDatabase extends BaseDatabase {
     public static TABLE_POSTS = "Labook_Posts"
@@ -33,5 +34,21 @@ export class PostDatabase extends BaseDatabase {
         .offset(offset)
 
         return postsDB
+    }
+
+    public findById = async(id:string) => {
+        const postsDB:IPostDB[] = await BaseDatabase
+        .connection(PostDatabase.TABLE_POSTS)
+        .select()
+        .where({id})
+
+        return postsDB[0]
+    }
+
+    public deletePostById = async (id: string) => {
+        await BaseDatabase
+            .connection(PostDatabase.TABLE_POSTS)
+            .delete()
+            .where({ id })
     }
 }
