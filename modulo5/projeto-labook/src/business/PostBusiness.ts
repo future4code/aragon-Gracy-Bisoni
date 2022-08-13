@@ -90,14 +90,15 @@ export class PostBusiness {
                 postDB.user_id
             )
 
-            const postResponse = {
-                id: post.getId(),
-                content: post.getContent(),
-                userId: post.getUserId()
-            }
-
-            return postResponse
+            return post
         })
+
+        for(let post of posts){
+            const likes:any = await this.postDatabase.getLikes(post.getId())
+
+            post.setLikes(likes)
+        }
+        
 
         const response = {
             posts
