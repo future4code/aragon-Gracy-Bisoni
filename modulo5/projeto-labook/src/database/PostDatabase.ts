@@ -1,4 +1,4 @@
-import { IGetPostsDBDTO, IPostDB, Post } from "../models/Post"
+import { IGetPostsDBDTO, ILikeDB, IPostDB, Post } from "../models/Post"
 import { BaseDatabase } from "./BaseDatabase"
 import { UserDatabase } from "./UserDatabase"
 
@@ -36,6 +36,17 @@ export class PostDatabase extends BaseDatabase {
         return postsDB
     }
 
+    public getLikes = async (id:string) => {
+
+        const result = await BaseDatabase.connection(PostDatabase.TABLE_LIKES)
+        .select()
+        .count("id")
+        .where({post_id: id})
+
+
+        return result[0]["count(`id`)"]
+    }
+
     public findById = async(id:string) => {
         const postsDB:IPostDB[] = await BaseDatabase
         .connection(PostDatabase.TABLE_POSTS)
@@ -50,5 +61,26 @@ export class PostDatabase extends BaseDatabase {
             .connection(PostDatabase.TABLE_POSTS)
             .delete()
             .where({ id })
+    }
+
+    public likePost = async(input:ILikeDB) => {
+        const newLikeDB: ILikeDB = {
+            id: input.id,
+            post_id: input.post_id,
+            user_id: input.user_id
+        }
+        await BaseDatabase
+        .connection(PostDatabase.TABLE_LIKES)
+        .insert(newLikeDB)
+    }
+
+    public isLiked = async (id:string, userId: string) => {
+        const postLikeDB: ILikeDB[] = await BaseDatabase
+            .connection("Labook_Likes")
+            .select()
+            .where("user_id", "=", `${userId}`)
+            .andWhere("post_id", "=", `${id}`)
+
+        return postLikeDB[0]
     }
 }

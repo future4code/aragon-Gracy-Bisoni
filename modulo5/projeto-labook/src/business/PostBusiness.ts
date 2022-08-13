@@ -1,7 +1,7 @@
 import { throws } from "assert"
 import { PostDatabase } from "../database/PostDatabase"
 import { UserDatabase } from "../database/UserDatabase"
-import { IDeletePostInputDTO, IGetPostsDBDTO, IGetPostsInputDTO, IPostDB, IPostInputDTO, Post } from "../models/Post"
+import { IDeletePostInputDTO, IGetPostsDBDTO, IGetPostsInputDTO, ILikeDB, ILikePostInputDTO, IPostDB, IPostInputDTO, Post } from "../models/Post"
 import { USER_ROLES } from "../models/User"
 import { Authenticator } from "../services/Authenticator"
 import { HashManager } from "../services/HashManager"
@@ -133,6 +133,45 @@ export class PostBusiness {
         
         const response = {
             message: "Post deleted successfully"
+        }
+
+        return response
+    }
+
+    public likePost = async (input: ILikePostInputDTO) => {
+        const token = input.token
+        const id = input.id
+
+        const payload = this.authenticator.getTokenPayload(token)
+
+        if(!payload){
+            throw new Error("Invalid token");
+        }
+
+        const searchPost = await this.postDatabase.findById(id)
+
+        if(!searchPost){
+            throw new Error("Post not found");  
+        }
+
+        const isLiked = await this.postDatabase.isLiked(id, payload.id)
+
+        if(isLiked){
+            throw new Error("You already liked this post");
+        }
+
+        const postId = this.idGenerator.generate()
+
+        const newLike: ILikeDB = {
+            id: postId,
+            post_id: id,
+            user_id: payload.id
+        }
+
+        await this.postDatabase.likePost(newLike)
+
+        const response = {
+            message: "Post liked!"
         }
 
         return response

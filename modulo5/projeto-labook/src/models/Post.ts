@@ -37,6 +37,11 @@ export interface IDeletePostInputDTO{
     id: string
 }
 
+export interface ILikePostInputDTO {
+    token: string,
+    id: string,
+}
+
 export class Post {
     constructor(
         private id: string,
