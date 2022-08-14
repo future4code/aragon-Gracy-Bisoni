@@ -42,6 +42,10 @@ export interface ILikePostInputDTO {
     id: string,
 }
 
+export interface ILikeDBDTO {
+    post_id: string;
+    user_id: string;
+}
 export class Post {
     constructor(
         private id: string,

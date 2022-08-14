@@ -99,7 +99,6 @@ export class PostBusiness {
             post.setLikes(likes)
         }
         
-
         const response = {
             posts
         }
@@ -150,7 +149,7 @@ export class PostBusiness {
         }
 
         const searchPost = await this.postDatabase.findById(id)
-
+        
         if(!searchPost){
             throw new Error("Post not found");  
         }
@@ -169,13 +168,89 @@ export class PostBusiness {
             user_id: payload.id
         }
 
+       
         await this.postDatabase.likePost(newLike)
 
         const response = {
             message: "Post liked!"
         }
 
+
         return response
+    }
+
+    // public dislikePost = async (input: IDislikePostInputDTO) => {
+    //     const token = input.token
+    //     const id = input.id
+
+    //     const payload = this.authenticator.getTokenPayload(token)
+
+    //     if (!payload) {
+    //         throw new Error("Invalid token")
+    //     }
+
+    //     const searchPost = await this.postDatabase.findById(id)
+
+    //     if(!searchPost){
+    //         throw new Error("Post not found");
+    //     }
+
+    //     const isLiked = await this.postDatabase.isLiked(id, payload.id)
+
+    //     if (!isLiked) {
+    //         throw new Error("This post isn't liked by you");
+    //     }
+    //     await this.postDatabase.dislikePost(id, payload.id)
+
+    //     const response = {
+    //         message: "Like removed from post"
+    //     }
+
+    //     return response
+    // }
+    public dislikePost = async (input: ILikePostInputDTO) => {
+        const token = input.token
+        const id = input.id
+
+        if (!token) {
+            throw new Error("Missing Token");
+        }
+
+        if (!id) {
+            throw new Error("Missing postId");
+        }
+
+        const payload = this.authenticator.getTokenPayload(token);
+
+        if (!payload) {
+            throw new Error("Invalid Token");
+        }
+
+        const postDB = await this.postDatabase.findById(id);
+
+        if (!postDB) {
+            throw new Error("Post not found");
+        }
+
+        const userId = payload.id;
+        const likeDB = await this.postDatabase.findById(id);
+
+        if (!likeDB) {
+            throw new Error("You haven't liked this post");
+        }
+
+        const dislike = {
+            post_id: id,
+            user_id: userId
+        }
+
+        await this.postDatabase.dislikePost(dislike);
+
+        const response = {
+            message: "Post disliked successfully"
+        }
+
+        return response;
     }
 
 }
