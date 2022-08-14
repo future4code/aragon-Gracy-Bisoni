@@ -179,35 +179,6 @@ export class PostBusiness {
         return response
     }
 
-    // public dislikePost = async (input: IDislikePostInputDTO) => {
-    //     const token = input.token
-    //     const id = input.id
-
-    //     const payload = this.authenticator.getTokenPayload(token)
-
-    //     if (!payload) {
-    //         throw new Error("Invalid token")
-    //     }
-
-    //     const searchPost = await this.postDatabase.findById(id)
-
-    //     if(!searchPost){
-    //         throw new Error("Post not found");
-    //     }
-
-    //     const isLiked = await this.postDatabase.isLiked(id, payload.id)
-
-    //     if (!isLiked) {
-    //         throw new Error("This post isn't liked by you");
-    //     }
-    //     await this.postDatabase.dislikePost(id, payload.id)
-
-    //     const response = {
-    //         message: "Like removed from post"
-    //     }
-
-    //     return response
-    // }
     public dislikePost = async (input: ILikePostInputDTO) => {
         const token = input.token
         const id = input.id
