@@ -84,7 +84,7 @@ export class PostDatabase extends BaseDatabase {
         return postLikeDB[0]
     }
 
-    dislikePost = async (dislike:ILikeDBDTO) => {
+    public dislikePost = async (dislike:ILikeDBDTO) => {
         const dislikeDB: ILikeDBDTO = {
             post_id: dislike.post_id,
             user_id: dislike.user_id
@@ -94,5 +94,18 @@ export class PostDatabase extends BaseDatabase {
             .connection(PostDatabase.TABLE_LIKES)
             .where({ post_id: dislike.post_id, user_id: dislike.user_id })
             .delete();
+    }
+
+    public modifyPost = async (post: IPostDB) => {
+        const postDB: IPostDB = {
+            id: post.id,
+            content: post.content,
+            user_id: post.user_id
+        }
+
+        await BaseDatabase
+            .connection(PostDatabase.TABLE_POSTS)
+            .update(postDB)
+            .where({ id: post.id})
     }
 }

@@ -1,6 +1,6 @@
 import { Request,Response } from "express";
 import { PostBusiness } from "../business/PostBusiness";
-import { IDeletePostInputDTO, IGetPostsDBDTO, IGetPostsInputDTO, ILikePostInputDTO, IPostInputDTO } from "../models/Post";
+import { IDeletePostInputDTO, IGetPostsDBDTO, IGetPostsInputDTO, ILikePostInputDTO, IPostInputDTO, IUpdatePostInputDTO } from "../models/Post";
 
 export class PostController {
     constructor(
@@ -82,6 +82,23 @@ export class PostController {
             res.status(200).send(response);
         } catch (error) {
             res.status(400).send({ message: error.message });
+        }
+    }
+
+    public updatePost = async (req: Request, res: Response) => {
+        try {
+            const input: IUpdatePostInputDTO = {
+                token: req.headers.authorization,
+                id: req.params.id,
+                content: req.body.content
+            }
+
+            const response = await this.postBusiness.modifyPost(input)
+
+            res.status(200).send(response)
+
+        } catch (error) {
+            res.status(400).send({ message: error.message })
         }
     }
 

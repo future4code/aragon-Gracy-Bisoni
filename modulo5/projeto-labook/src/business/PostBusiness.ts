@@ -1,7 +1,7 @@
 import { throws } from "assert"
 import { PostDatabase } from "../database/PostDatabase"
 import { UserDatabase } from "../database/UserDatabase"
-import { IDeletePostInputDTO, IGetPostsDBDTO, IGetPostsInputDTO, ILikeDB, ILikePostInputDTO, IPostDB, IPostInputDTO, Post } from "../models/Post"
+import { IDeletePostInputDTO, IGetPostsDBDTO, IGetPostsInputDTO, ILikeDB, ILikePostInputDTO, IPostDB, IPostInputDTO, IUpdatePostInputDTO, Post } from "../models/Post"
 import { USER_ROLES } from "../models/User"
 import { Authenticator } from "../services/Authenticator"
 import { HashManager } from "../services/HashManager"
@@ -222,6 +222,53 @@ export class PostBusiness {
         }
 
         return response;
+    }
+
+    public modifyPost = async(input: IUpdatePostInputDTO) => {
+        const token = input.token
+        const id = input.id
+        const content = input.content
+
+        const payload = this.authenticator.getTokenPayload(token)
+
+        if (!payload) {
+            throw new Error("Invalid or missing token")
+        }
+
+        const findPostById = await this.postDatabase.findById(id)
+
+        if(!findPostById){
+            throw new Error("Post not found");
+        }
+
+        if(!content){
+            throw new Error("Missing param")
+        }
+
+        if(content.length < 1 || typeof content !== "string"){
+            throw new Error("Invalid param. Content must be string type and have at least 1 character.")
+        }
+
+        if (payload.role === USER_ROLES.NORMAL) {
+            if (payload.id !== findPostById.user_id) {
+                throw new Error("Only ADMIN accounts can edit posts from other users");
+            }
+        }
+
+        const updatedPost:IPostDB = {
+            id: id,
+            content: content,
+            user_id: payload.id
+        }
+
+        await this.postDatabase.modifyPost(updatedPost)
+
+        const response = {
+            message: "Post updated",
+            post: updatedPost
+        }
+
+        return response
     }
 
 }
