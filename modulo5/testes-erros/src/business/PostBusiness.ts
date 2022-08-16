@@ -34,11 +34,11 @@ export class PostBusiness {
     const payload = this.authenticator.getTokenPayload(token);
 
     if (!payload) {
-      throw new RequestError('Não autenticado');
+      throw new UnauthorizedError('Não autenticado');
     }
 
     if (typeof content !== 'string') {
-      throw new Error("Parâmetro 'content' inválido");
+      throw new UnauthorizedError("Parâmetro 'content' inválido");
     }
 
     if (content.length < 1) {
@@ -67,7 +67,7 @@ export class PostBusiness {
     const payload = this.authenticator.getTokenPayload(token);
 
     if (!payload) {
-      throw new Error('Não autenticado');
+      throw new UnauthorizedError('Não autenticado');
     }
 
     const postsDB = await this.postDatabase.getPosts();

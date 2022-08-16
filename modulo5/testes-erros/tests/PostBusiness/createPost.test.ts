@@ -39,14 +39,14 @@ describe('Testando PostBusiness', () => {
       await postBusiness.createPost(input);
     } catch (error: unknown) {
       if (error instanceof BaseError) {
-        expect(error.statusCode).toEqual(400);
+        expect(error.statusCode).toEqual(401);
         expect(error.message).toEqual('Não autenticado');
       }
     }
   });
 
   test('retorna erro se content for string vazia', async () => {
-    // expect.assertions(2);
+    expect.assertions(2);
     try {
       const input: ICreatePostInputDTO = {
         token: 'token-astrodev',
@@ -58,7 +58,7 @@ describe('Testando PostBusiness', () => {
       if (error instanceof BaseError) {
         expect(error.statusCode).toEqual(400);
         expect(error.message).toEqual(
-          "Parâmetro 'content' inválido: mínimo de 1 caracteres"
+          "Parâmetro 'content' inválido: mínimo de 1 caracter"
         );
       }
     }
