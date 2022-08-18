@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 import { ShowBusiness } from '../business/ShowBusiness';
 import { BaseError } from '../errors/BaseError';
-import { IGetShowsInputDTO, IShowInputDTO } from '../models/Show';
+import {
+  IBuyTicketInputDTO,
+  IGetShowsInputDTO,
+  IShowInputDTO,
+} from '../models/Show';
 
 export class ShowController {
   constructor(private showBusiness: ShowBusiness) {}
@@ -44,8 +48,28 @@ export class ShowController {
     } catch (error: unknown) {
       if (error instanceof BaseError) {
         return res.status(error.statusCode).send({ message: error.message });
+      } else {
+        return res.status(500).send({ message: 'Unexpected error occurred' });
       }
-      res.status(500).send({ message: 'Unexpected error occurred' });
+    }
+  };
+
+  public buyTicket = async (req: Request, res: Response) => {
+    try {
+      const input: IBuyTicketInputDTO = {
+        token: req.headers.authorization,
+        showId: req.params.id,
+      };
+      const response = await this.showBusiness.buyTicket(input);
+      res.status(200).send(response);
+    } catch (error) {
+      if (error instanceof BaseError) {
+        return res.status(error.statusCode).send({ message: error.message });
+      } else {
+        return res
+          .status(500)
+          .send({ message: 'Unexpected error to buying ticket' });
+      }
     }
   };
 }

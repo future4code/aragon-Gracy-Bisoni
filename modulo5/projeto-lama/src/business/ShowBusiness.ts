@@ -1,12 +1,16 @@
 import { ShowDatabase } from '../database/ShowDatabase';
 import { ConflictError } from '../errors/ConflictError';
+import { NotFoundError } from '../errors/NotFoundError';
 import { RequestError } from '../errors/RequestError';
 import { UnauthorizedError } from '../errors/UnauthorizedError';
 import {
+  IBuyTicketInputDTO,
+  IBuyTicketOutputDTO,
   IGetShowsDBDTO,
   IGetShowsInputDTO,
   IShowDB,
   IShowInputDTO,
+  ITicketDB,
   Show,
 } from '../models/Show';
 import { Authenticator } from '../services/Authenticator';
@@ -110,13 +114,74 @@ export class ShowBusiness {
 
     for (let show of shows) {
       const tickets: any = await this.showDatabase.getTickets(show.getId());
-
       show.setTickets(show.getTickets() - tickets);
     }
 
     const response = {
       message: 'SUCCESS',
       shows,
+    };
+
+    return response;
+  };
+
+  public buyTicket = async (input: IBuyTicketInputDTO) => {
+    const { token, showId } = input;
+
+    const payload = this.authenticator.getTokenPayload(token);
+
+    if (!payload) {
+      throw new RequestError('Missing token');
+    }
+
+    if (!showId || typeof showId !== 'string') {
+      throw new RequestError('Missing params: insert a valid show id');
+    }
+
+    const searchShow = await this.showDatabase.verifyShow(showId);
+
+    if (!searchShow) {
+      throw new NotFoundError('Show not found');
+    }
+
+    const searchTicket = await this.showDatabase.existBoughtTicket(
+      showId,
+      payload.id
+    );
+
+    if (searchTicket) {
+      throw new ConflictError('You already bought tickets for this show');
+    }
+
+    const shows = await this.getShows({
+      token,
+      search: undefined,
+      order: undefined,
+      sort: undefined,
+      page: undefined,
+      limit: undefined,
+    });
+
+    const [ticketsAvailable] = shows.shows.filter(show => {
+      return show.getId() === showId;
+    });
+
+    if (ticketsAvailable.getTickets() === 0) {
+      throw new RequestError('Tickets sold out');
+    }
+
+    const id = this.idGenerator.generate();
+
+    const ticket: ITicketDB = {
+      id: id,
+      show_id: showId,
+      user_id: payload.id,
+    };
+
+    await this.showDatabase.newTicket(ticket);
+
+    const response: IBuyTicketOutputDTO = {
+      message: 'Ticket bougth successfully!',
     };
 
     return response;

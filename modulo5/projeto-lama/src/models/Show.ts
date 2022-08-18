@@ -26,12 +26,26 @@ export interface IGetShowsInputDTO {
 }
 
 export interface IGetShowsDBDTO {
-  search: string;
-  order: string;
-  sort: string;
-  limit: number;
-  offset: number;
+  search: string | undefined;
+  order: string | undefined;
+  sort: string | undefined;
+  limit: number | undefined;
+  offset: number | undefined;
 }
+
+export interface IBuyTicketInputDTO {
+  token: string;
+  showId: string;
+}
+
+export interface IGetShowsOutputDTO {
+  shows: Show[];
+}
+
+export interface IBuyTicketOutputDTO {
+  message: string;
+}
+
 export class Show {
   constructor(
     private id: string,
