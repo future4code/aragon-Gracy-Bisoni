@@ -15,6 +15,23 @@ export interface IShowInputDTO {
   band: string;
   startsAt: Date;
 }
+
+export interface IGetShowsInputDTO {
+  token: string;
+  search: string | undefined;
+  order: string | undefined;
+  sort: string | undefined;
+  page: string | undefined;
+  limit: string | undefined;
+}
+
+export interface IGetShowsDBDTO {
+  search: string;
+  order: string;
+  sort: string;
+  limit: number;
+  offset: number;
+}
 export class Show {
   constructor(
     private id: string,

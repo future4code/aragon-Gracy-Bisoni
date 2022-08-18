@@ -2,7 +2,13 @@ import { ShowDatabase } from '../database/ShowDatabase';
 import { ConflictError } from '../errors/ConflictError';
 import { RequestError } from '../errors/RequestError';
 import { UnauthorizedError } from '../errors/UnauthorizedError';
-import { IShowInputDTO, Show } from '../models/Show';
+import {
+  IGetShowsDBDTO,
+  IGetShowsInputDTO,
+  IShowDB,
+  IShowInputDTO,
+  Show,
+} from '../models/Show';
 import { Authenticator } from '../services/Authenticator';
 import { HashManager } from '../services/HashManager';
 import { IdGenerator } from '../services/IdGenerator';
@@ -65,6 +71,52 @@ export class ShowBusiness {
     const response = {
       message: 'Show created successfully',
       show,
+    };
+
+    return response;
+  };
+
+  public getShows = async (input: IGetShowsInputDTO) => {
+    const token = input.token;
+    const search = input.search || '';
+    const order = input.order || 'ASC';
+    const sort = input.sort || 'starts_at';
+    const limit = Number(input.limit) || 10;
+    const page = Number(input.page) || 1;
+    const offset = (page - 1) * limit;
+
+    if (!token) {
+      throw new RequestError('Missing token');
+    }
+
+    const payload = this.authenticator.getTokenPayload(token);
+
+    if (!payload) {
+      throw new RequestError('Invalid token');
+    }
+
+    const getShowsInputDB: IGetShowsDBDTO = {
+      search,
+      order,
+      sort,
+      limit,
+      offset,
+    };
+
+    const showsDB = await this.showDatabase.getShows(getShowsInputDB);
+    const shows = showsDB.map(showDB => {
+      return new Show(showDB.id, showDB.band, showDB.starts_at);
+    });
+
+    for (let show of shows) {
+      const tickets: any = await this.showDatabase.getTickets(show.getId());
+
+      show.setTickets(show.getTickets() - tickets);
+    }
+
+    const response = {
+      message: 'SUCCESS',
+      shows,
     };
 
     return response;
