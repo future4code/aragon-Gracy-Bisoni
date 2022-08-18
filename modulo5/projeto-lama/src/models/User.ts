@@ -10,6 +10,10 @@ export interface IUserDB {
   password: string;
   role: USER_ROLES;
 }
+export interface ILoginInputDTO {
+  email: string;
+  password: string;
+}
 
 export class User {
   constructor(

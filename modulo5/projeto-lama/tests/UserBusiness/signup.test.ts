@@ -27,43 +27,41 @@ describe('Testando UserBusiness', () => {
     expect(response.token).toEqual('token-mock');
   });
 
-  //   test('return name if name is an empty string', async () => {
-  //     expect.assertions(2);
+  test("return error if name doesn't have at least 3 characters", async () => {
+    expect.assertions(2);
+    try {
+      const input: ISignupInputDTO = {
+        name: 'me',
+        email: 'alice@gmail.com',
+        password: 'alice99',
+      };
 
-  //     try {
-  //       const input: ISignupInputDTO = {
-  //         name: '',
-  //         email: 'alice@gmail.com',
-  //         password: 'alice99',
-  //       };
+      await userBusiness.signup(input);
+    } catch (error: unknown) {
+      if (error instanceof BaseError) {
+        expect(error.statusCode).toEqual(400);
+        expect(error.message).toEqual(
+          'Name must be string type, with more than 3 characters'
+        );
+      }
+    }
+  });
 
-  //       await userBusiness.signup(input);
-  //     } catch (error: unknown) {
-  //       if (error instanceof BaseError) {
-  //         expect(error.statusCode).toEqual(400);
-  //         expect(error.message).toEqual(
-  //           'Name must be string type, with more than 3 characters'
-  //         );
-  //       }
-  //     }
-  //   });
+  test('return an error if e-mail already have an account', async () => {
+    expect.assertions(2);
+    try {
+      const input: ISignupInputDTO = {
+        name: 'Astrodev',
+        email: 'astrodev@gmail.com',
+        password: 'bananinha',
+      };
 
-  //   test('return an error if e-mail already have an account', async () => {
-  //     expect.assertions(2);
-
-  //     try {
-  //       const input: ISignupInputDTO = {
-  //         name: 'Astrodev',
-  //         email: 'astrodev@gmail.com',
-  //         password: 'bananinha',
-  //       };
-
-  //       await userBusiness.signup(input);
-  //     } catch (error: unknown) {
-  //       if (error instanceof BaseError) {
-  //         expect(error.statusCode).toEqual(409);
-  //         expect(error.message).toEqual('E-mail already have an account');
-  //       }
-  //     }
-  //   });
+      await userBusiness.signup(input);
+    } catch (error: unknown) {
+      if (error instanceof BaseError) {
+        expect(error.statusCode).toEqual(409);
+        expect(error.message).toEqual('E-mail already have an account');
+      }
+    }
+  });
 });

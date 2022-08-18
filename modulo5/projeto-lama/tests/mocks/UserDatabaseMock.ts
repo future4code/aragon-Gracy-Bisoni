@@ -16,7 +16,7 @@ export class UserDatabaseMock extends BaseDatabase {
     return userDB;
   };
 
-  public findByEmail = async (email: string) => {
+  public findByEmail = async (email: string): Promise<IUserDB | undefined> => {
     switch (email) {
       case 'astrodev@gmail.com':
         return {
