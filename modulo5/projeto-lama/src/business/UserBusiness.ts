@@ -39,7 +39,7 @@ export class UserBusiness {
     }
 
     if (typeof password !== 'string' || password.length < 6) {
-      throw new Error(
+      throw new RequestError(
         'Password must be string type, with more than 6 characters.'
       );
     }
@@ -50,7 +50,7 @@ export class UserBusiness {
       ) ||
       typeof email !== 'string'
     ) {
-      throw new Error('Invalid e-mail');
+      throw new RequestError('Invalid e-mail');
     }
 
     const searchUser = await this.userDatabase.findByEmail(email);
@@ -92,7 +92,7 @@ export class UserBusiness {
     const password = input.password;
 
     if (!email || !password) {
-      throw new Error('Missing params. Insert email and password.');
+      throw new RequestError('Missing params. Insert email and password.');
     }
 
     if (
@@ -101,11 +101,11 @@ export class UserBusiness {
       ) ||
       typeof email !== 'string'
     ) {
-      throw new Error('Invalid e-mail');
+      throw new RequestError('Invalid e-mail');
     }
 
     if (typeof password !== 'string' || password.length < 6) {
-      throw new Error(
+      throw new RequestError(
         'Password must be string type and have at least 6 characters'
       );
     }
