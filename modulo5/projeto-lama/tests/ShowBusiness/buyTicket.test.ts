@@ -14,7 +14,7 @@ describe('Testing ShowBusiness', () => {
     new AuthenticatorMock()
   );
 
-  test('Successfully ticket buy', async () => {
+  test('Successfuly ticket buy', async () => {
     const input: IBuyTicketInputDTO = {
       token: 'token-mock',
       showId: '201',
@@ -22,7 +22,7 @@ describe('Testing ShowBusiness', () => {
 
     const response = await showBusiness.buyTicket(input);
 
-    expect(response.message).toEqual('Ticket bougth successfully!');
+    expect(response.message).toEqual('Ticket bougth successfuly!');
   });
 
   test('returns error if showId is not found', async () => {

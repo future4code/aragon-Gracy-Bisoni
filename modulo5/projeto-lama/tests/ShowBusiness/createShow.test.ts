@@ -25,7 +25,7 @@ describe('ShowBusiness test', () => {
 
     // SE EU COLOCO UM EXPECT COM A ID DO ASTRODEV, DÁ ERRO
     // APESAR DA CONFERÊNCIA DO TOKEN ESTAR CERTA, ME RETORNA 'id-mock'?????????
-    expect(response.message).toEqual('Show created successfully');
+    expect(response.message).toEqual('Show created successfuly');
     expect(response.show.getBand()).toEqual('Liniker e os Caramelows');
   });
 

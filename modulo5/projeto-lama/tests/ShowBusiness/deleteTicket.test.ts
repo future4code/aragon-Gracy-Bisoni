@@ -22,7 +22,7 @@ describe('Testing ShowBusiness', () => {
 
     const response = await showBusiness.deleteTicket(input);
 
-    expect(response.message).toEqual('Ticket deleted successfully!');
+    expect(response.message).toEqual('Ticket deleted successfuly!');
   });
 
   test('returns error if ticket not found', async () => {

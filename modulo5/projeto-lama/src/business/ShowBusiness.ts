@@ -76,7 +76,7 @@ export class ShowBusiness {
     await this.showDatabase.createShow(show);
 
     const response = {
-      message: 'Show created successfully',
+      message: 'Show created successfuly',
       show,
     };
 
@@ -184,7 +184,7 @@ export class ShowBusiness {
     await this.showDatabase.newTicket(ticket);
 
     const response: IBuyTicketOutputDTO = {
-      message: 'Ticket bougth successfully!',
+      message: 'Ticket bougth successfuly!',
       yourTicket: ticket,
     };
 
@@ -223,7 +223,7 @@ export class ShowBusiness {
     await this.showDatabase.deleteTicket(ticketId);
 
     const response: IDeleteTicketOutputDTO = {
-      message: 'Ticket deleted successfully!',
+      message: 'Ticket deleted successfuly!',
     };
 
     return response;
