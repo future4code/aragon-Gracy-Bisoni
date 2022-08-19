@@ -44,6 +44,15 @@ export interface IGetShowsOutputDTO {
 
 export interface IBuyTicketOutputDTO {
   message: string;
+  yourTicket: ITicketDB;
+}
+
+export interface IDeleteTicketInputDTO {
+  token: string;
+  ticketId: string;
+}
+export interface IDeleteTicketOutputDTO {
+  message: string;
 }
 
 export class Show {

@@ -3,6 +3,7 @@ import { ShowBusiness } from '../business/ShowBusiness';
 import { BaseError } from '../errors/BaseError';
 import {
   IBuyTicketInputDTO,
+  IDeleteTicketInputDTO,
   IGetShowsInputDTO,
   IShowInputDTO,
 } from '../models/Show';
@@ -69,6 +70,26 @@ export class ShowController {
         return res
           .status(500)
           .send({ message: 'Unexpected error to buying ticket' });
+      }
+    }
+  };
+
+  public deleteTicket = async (req: Request, res: Response) => {
+    try {
+      const input: IDeleteTicketInputDTO = {
+        token: req.headers.authorization,
+        ticketId: req.params.id,
+      };
+
+      const response = await this.showBusiness.deleteTicket(input);
+      res.status(200).send(response);
+    } catch (error) {
+      if (error instanceof BaseError) {
+        return res.status(error.statusCode).send({ message: error.message });
+      } else {
+        return res
+          .status(500)
+          .send({ message: 'Unexpected error in delete ticket' });
       }
     }
   };

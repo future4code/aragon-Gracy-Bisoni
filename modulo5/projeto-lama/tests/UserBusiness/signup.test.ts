@@ -6,7 +6,7 @@ import { HashManagerMock } from '../mocks/services/HashManagerMock';
 import { IdGeneratorMock } from '../mocks/services/IdGeneratorMock';
 import { UserDatabaseMock } from '../mocks/UserDatabaseMock';
 
-describe('Testando UserBusiness', () => {
+describe('Testing UserBusiness', () => {
   const userBusiness = new UserBusiness(
     new UserDatabaseMock(),
     new IdGeneratorMock(),
@@ -14,7 +14,7 @@ describe('Testando UserBusiness', () => {
     new AuthenticatorMock()
   );
 
-  test('signup bem sucedido', async () => {
+  test('Successfully signup', async () => {
     const input: ISignupInputDTO = {
       name: 'alice',
       email: 'alice@gmail.com',

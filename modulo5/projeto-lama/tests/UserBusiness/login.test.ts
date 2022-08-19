@@ -6,7 +6,7 @@ import { IdGeneratorMock } from '../mocks/services/IdGeneratorMock';
 import { UserDatabaseMock } from '../mocks/UserDatabaseMock';
 import { BaseError } from '../../src/errors/BaseError';
 
-describe('Testando UserBusiness', () => {
+describe('Testing UserBusiness', () => {
   const userBusiness = new UserBusiness(
     new UserDatabaseMock(),
     new IdGeneratorMock(),

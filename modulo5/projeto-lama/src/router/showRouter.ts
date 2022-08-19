@@ -20,3 +20,4 @@ const showController = new ShowController(
 showRouter.post('/', showController.createShow);
 showRouter.get('/', showController.getShows);
 showRouter.post('/purchase/:id', showController.buyTicket);
+showRouter.delete('/ticket/:id', showController.deleteTicket);

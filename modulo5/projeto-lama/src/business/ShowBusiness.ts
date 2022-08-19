@@ -6,6 +6,8 @@ import { UnauthorizedError } from '../errors/UnauthorizedError';
 import {
   IBuyTicketInputDTO,
   IBuyTicketOutputDTO,
+  IDeleteTicketInputDTO,
+  IDeleteTicketOutputDTO,
   IGetShowsDBDTO,
   IGetShowsInputDTO,
   IShowDB,
@@ -13,6 +15,7 @@ import {
   ITicketDB,
   Show,
 } from '../models/Show';
+import { USER_ROLES } from '../models/User';
 import { Authenticator } from '../services/Authenticator';
 import { HashManager } from '../services/HashManager';
 import { IdGenerator } from '../services/IdGenerator';
@@ -182,6 +185,45 @@ export class ShowBusiness {
 
     const response: IBuyTicketOutputDTO = {
       message: 'Ticket bougth successfully!',
+      yourTicket: ticket,
+    };
+
+    return response;
+  };
+
+  public deleteTicket = async (input: IDeleteTicketInputDTO) => {
+    const { token, ticketId } = input;
+    const payload = this.authenticator.getTokenPayload(token);
+
+    if (!payload) {
+      throw new RequestError('Missing/invalid token');
+    }
+
+    if (!ticketId) {
+      throw new RequestError('Missing params: insert a valid ticket id');
+    }
+
+    const searchTicket = await this.showDatabase.verifyTicket(
+      ticketId,
+      payload.id
+    );
+
+    if (!searchTicket) {
+      throw new NotFoundError("You didn't bougth tickets for this show");
+    }
+
+    if (payload.role === USER_ROLES.NORMAL) {
+      if (payload.id !== searchTicket.user_id) {
+        throw new UnauthorizedError(
+          "Only admin accounts can delete other's tickets"
+        );
+      }
+    }
+
+    await this.showDatabase.deleteTicket(ticketId);
+
+    const response: IDeleteTicketOutputDTO = {
+      message: 'Ticket deleted successfully!',
     };
 
     return response;
